@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JarryLink | Architect</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>.glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }</style>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        /* Is se link par mouse le jane par cursor pointer banega magar address show nahi hoga */
+        #displayLink { cursor: pointer; user-select: none; }
+    </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4 font-sans">
 
     <div class="absolute top-5 right-5 flex items-center gap-2 bg-black/40 p-3 rounded-full border border-white/10">
-        <div id="dot" class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444]"></div>
-        <span id="stext" class="text-[10px] font-mono uppercase tracking-widest text-gray-300">Engine Offline</span>
+        <div id="dot" class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
+        <span id="stext" class="text-[10px] font-mono uppercase tracking-widest text-gray-300">Engine Online</span>
     </div>
 
     <div class="max-w-md w-full glass p-8 rounded-[2.5rem] border border-white/20 shadow-2xl text-center">
@@ -38,29 +42,19 @@
             </button>
         </div>
 
-       <div id="result" class="mt-8 hidden p-6 bg-emerald-400/10 border border-emerald-400/30 rounded-[2rem]">
-    <p class="text-[10px] text-emerald-400 uppercase font-bold mb-2">Live Branded Link</p>
-    
-    <div id="displayLink" class="text-2xl font-bold text-white cursor-pointer hover:text-emerald-400 transition-all break-all" onclick="openDirectly()">
-        jarrylink/MyName
-    </div>
-
-    <button onclick="copyLink()" class="mt-4 text-[10px] bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-emerald-400 transition-all">
-        COPY PROFESSIONAL LINK
-    </button>
-</div>
+        <div id="result" class="mt-8 hidden p-6 bg-emerald-400/10 border border-emerald-400/30 rounded-[2rem]">
+            <p class="text-[10px] text-emerald-400 uppercase font-bold mb-2">Live Branded Link</p>
+            <div id="displayLink" onclick="openDirectly()" class="text-2xl font-bold text-white hover:text-emerald-400 transition-all break-all">
+                jarrylink/Name
+            </div>
+            <button onclick="copyLink()" class="mt-4 text-[10px] bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-emerald-400 transition-all">
+                COPY FOR WEB
+            </button>
+        </div>
     </div>
 
     <script>
-        async function checkStatus() {
-            try {
-                const res = await fetch('/status');
-                if(res.ok) {
-                    document.getElementById('dot').className = "w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]";
-                    document.getElementById('stext').innerText = "Engine Online";
-                }
-            } catch(e) {}
-        }
+        let finalTargetUrl = ""; 
 
         async function shortenLink() {
             const original_url = document.getElementById('longUrl').value;
@@ -82,7 +76,10 @@
             if(res.ok) {
                 document.getElementById('result').classList.remove('hidden');
                 document.getElementById('displayLink').innerText = `jarrylink/${short_code}`;
-                document.getElementById('displayLink').href = `https://www.jarrylink.site/${short_code}`;
+                
+                // Target URL ko local variable mein save kiya
+                finalTargetUrl = original_url.startsWith('http') ? original_url : 'https://' + original_url;
+                
                 btn.innerText = "GENERATE LINK";
             } else {
                 alert("Error: Try another name!");
@@ -91,16 +88,20 @@
             btn.disabled = false;
         }
 
+        // Ye function hamari site ko involve kiye baghair seedha target kholta hai
+        function openDirectly() {
+            if(finalTargetUrl) {
+                window.open(finalTargetUrl, '_blank');
+            }
+        }
+
         function copyLink() {
             const display = document.getElementById('displayLink').innerText;
             const code = display.split('/')[1];
             const final = "https://www.jarrylink.site/" + code;
             navigator.clipboard.writeText(final);
-            alert("Copied: " + final);
+            alert("Professional Link Copied!");
         }
-
-        setInterval(checkStatus, 5000);
-        checkStatus();
     </script>
 </body>
 </html>
