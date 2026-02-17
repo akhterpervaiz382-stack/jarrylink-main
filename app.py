@@ -9,8 +9,9 @@ load_dotenv()
 
 # 2. Flask Initialize
 app = Flask(__name__)
-# CORS setting for Vercel
-CORS(app)
+
+# CORS ko har origin ke liye allow kar dein taaki Vercel/Domain ka masla na ho
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # 3. Supabase Connection
 url = os.environ.get("SUPABASE_URL")
@@ -19,13 +20,12 @@ supabase = create_client(url, key)
 
 # --- ROUTES ---
 
-# A. Home Route - Ab seedha Tool nazar aayega
+# A. Home Route
 @app.route('/')
 def home():
-    # Yeh aapke 'templates/architect_tool.html' ko load karega
     return render_template('architect_tool.html')
 
-# B. System Status (Checking ke liye alag route)
+# B. System Status - Isi route se Green Dot chalta hai
 @app.route('/status')
 def status():
     return jsonify({
@@ -51,7 +51,8 @@ def create_short_link():
             "clicks": 0
         }
         
-        # NOTE: Agar table ka naam 'urls' hai toh niche 'links' ko 'urls' kar dein
+        # NOTE: Agar Supabase mein table ka naam 'urls' hai toh yahan badal dein
+        # Abhi ye 'links' table use kar raha hai
         supabase.table('links').insert(entry).execute()
         
         return jsonify({"status": "success", "message": "Link saved!"}), 201
@@ -62,7 +63,8 @@ def create_short_link():
 # D. Redirect Logic
 @app.route('/<short_code>')
 def redirect_to_url(short_code):
-    if short_code in ["favicon.ico", "favicon.png", "robots.txt"]:
+    # System files ko ignore karein
+    if short_code in ["favicon.ico", "favicon.png", "robots.txt", "status"]:
         return "", 204
         
     try:
@@ -71,16 +73,16 @@ def redirect_to_url(short_code):
         
         if result.data and len(result.data) > 0:
             target_url = result.data[0]['original_url']
-            # Protocol check (http/https)
+            # Protocol check
             if not target_url.startswith(('http://', 'https://')):
                 target_url = 'https://' + target_url
             return redirect(target_url)
         else:
-            return "<h1>Link Not Found!</h1><p>Create it at jarrylink.site</p>", 404
+            return "<h1>Link Not Found!</h1><p>Visit <a href='https://jarrylink.site'>jarrylink.site</a> to create one.</p>", 404
             
     except Exception as e:
         return f"Error: {str(e)}", 500
 
-# 4. Engine Start
+# 4. Local Testing ke liye
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
