@@ -1,62 +1,47 @@
-import os
-from flask import Flask, request, jsonify, make_response, render_template
-from flask_cors import CORS
-from supabase import create_client
-from dotenv import load_dotenv
+let finalTargetUrl = ""; // Ismein asli target save hoga
 
-load_dotenv()
+async function shortenLink() {
+    const original_url = document.getElementById('longUrl').value;
+    let short_code = document.getElementById('shortCode').value.trim();
+    const btn = document.getElementById('btn');
 
-app = Flask(__name__, template_folder='../templates')
-CORS(app)
-
-supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
-
-@app.route('/<short_code>')
-def redirect_logic(short_code):
-    # System routes check
-    if short_code in ["favicon.ico", "status", "shorten", "static"]:
-        return "", 204
+    if(!original_url) return alert("Pehle URL dalein!");
     
-    try:
-        res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
+    btn.innerText = "ARCHITECTING...";
+    btn.disabled = true;
+
+    const res = await fetch('/shorten', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ original_url, short_code })
+    });
+
+    if(res.ok) {
+        document.getElementById('result').classList.remove('hidden');
+        document.getElementById('displayLink').innerText = `jarrylink/${short_code}`;
         
-        if res.data and len(res.data) > 0:
-            target = res.data[0]['original_url']
-            if not target.startswith(('http://', 'https://')): 
-                target = 'https://' + target
-            
-            # --- BULLETPROOF REDIRECT ---
-            # Hum Flask ka default redirect use nahi kar rahe kyunke wo slow hai
-            # Hum direct 'Location' header bhej rahe hain 301 status ke saath
-            response = make_response("", 301)
-            response.headers['Location'] = target
-            response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-            return response
-            
-    except Exception:
-        pass
+        // Asli target URL ko memory mein save kar liya (Browser ko nahi dikhaya)
+        finalTargetUrl = original_url.startsWith('http') ? original_url : 'https://' + original_url;
         
-    # Agar link nahi milta toh seedha home par (Yahan bhi 302 use kiya taaki fast ho)
-    response = make_response("", 302)
-    response.headers['Location'] = '/'
-    return response
+        btn.innerText = "GENERATE LINK";
+    } else {
+        alert("Error: Try another name!");
+        btn.innerText = "TRY AGAIN";
+    }
+    btn.disabled = false;
+}
 
-@app.route('/')
-def home():
-    return render_template('architect_tool.html')
+// Ye function bina hamari site dikhaye seedha target khol dega
+function openDirectly() {
+    if(finalTargetUrl) {
+        window.open(finalTargetUrl, '_blank');
+    }
+}
 
-@app.route('/status')
-def status():
-    return jsonify({"status": "online"})
-
-@app.route('/shorten', methods=['POST'])
-def shorten():
-    try:
-        data = request.get_json()
-        s_code, l_url = data.get('short_code').strip(), data.get('original_url').strip()
-        supabase.table('links').insert({"short_code": s_code, "original_url": l_url, "clicks": 0}).execute()
-        return jsonify({"status": "success"}), 201
-    except:
-        return jsonify({"status": "error"}), 400
-
-app = app
+function copyLink() {
+    const display = document.getElementById('displayLink').innerText;
+    const code = display.split('/')[1];
+    const final = "https://www.jarrylink.site/" + code;
+    navigator.clipboard.writeText(final);
+    alert("Copied: " + final);
+}
