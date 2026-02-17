@@ -9,48 +9,57 @@ load_dotenv()
 app = Flask(__name__, template_folder='../templates')
 CORS(app)
 
-# Supabase Connection
-supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
+# Supabase initialization
+url = os.environ.get("SUPABASE_URL")
+key = os.environ.get("SUPABASE_KEY")
+supabase = create_client(url, key)
 
 @app.route('/')
 def home():
-    return render_template('architect_tool.html')
+    try:
+        return render_template('architect_tool.html')
+    except:
+        return "Template folder error. Check your structure.", 500
 
 @app.route('/status')
 def status():
-    return jsonify({"status": "online"})
+    return jsonify({"status": "online", "brand": "JarryLink"})
 
 @app.route('/shorten', methods=['POST'])
-def create():
+def shorten():
     try:
         data = request.get_json()
-        s_code = data.get('short_code').strip()
-        l_url = data.get('original_url').strip()
-        
-        # Check if exists
-        check = supabase.table('links').select("*").eq("short_code", s_code).execute()
+        short_code = data.get('short_code').strip()
+        original_url = data.get('original_url').strip()
+
+        # Database Check
+        check = supabase.table('links').select("*").eq("short_code", short_code).execute()
         if check.data:
             return jsonify({"status": "error", "message": "Booked!"}), 400
 
-        supabase.table('links').insert({"short_code": s_code, "original_url": l_url, "clicks": 0}).execute()
+        # Insert
+        supabase.table('links').insert({
+            "short_code": short_code, 
+            "original_url": original_url, 
+            "clicks": 0
+        }).execute()
+        
         return jsonify({"status": "success"}), 201
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
-# YE HAI GAME-CHANGER ROUTE
 @app.route('/<path:short_code>')
 def redirect_logic(short_code):
-    # Ignore static files
-    if short_code in ["favicon.ico", "status", "api"]: return "", 204
-    
+    if short_code in ["favicon.ico", "status"]: return "", 204
     try:
         res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
         if res.data:
-            url = res.data[0]['original_url']
-            if not url.startswith(('http://', 'https://')): url = 'https://' + url
-            return redirect(url)
-        return f"<h1>404 - Link Not Found</h1><p>'{short_code}' is not registered.</p>", 404
+            target = res.data[0]['original_url']
+            if not target.startswith(('http://', 'https://')): target = 'https://' + target
+            return redirect(target)
+        return "<h1>404 - Link Not Found</h1>", 404
     except:
         return redirect('/')
 
+# Important for Vercel
 app = app
