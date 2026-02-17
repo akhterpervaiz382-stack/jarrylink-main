@@ -56,7 +56,8 @@ def redirect_logic(short_code):
         if res.data:
             target = res.data[0]['original_url']
             if not target.startswith(('http://', 'https://')): target = 'https://' + target
-            return redirect(target)
+            # Yahan humne sirf code=301 add kiya hai fast redirection ke liye
+            return redirect(target, code=301)
         return "<h1>404 - Link Not Found</h1>", 404
     except:
         return redirect('/')
