@@ -1,8 +1,22 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(?!static|api)(.*)",
+      "source": "/status",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/shorten",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/(?!static)(.*)",
       "destination": "/api/index"
     }
   ]
