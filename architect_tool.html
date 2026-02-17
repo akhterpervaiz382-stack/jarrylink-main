@@ -37,19 +37,21 @@
 </div>
 
 <script>
-    const LOCAL_ENGINE = "http://127.0.0.1:5000";
+    // Auto-detect engine URL (Works for Local and Vercel)
+    const ENGINE_URL = window.location.origin;
 
     // 1. Connection Check
     async function checkConnection() {
         try {
-            const response = await fetch(`${LOCAL_ENGINE}/`);
+            // Humne app.py mein /status banaya hai, wahan check karte hain
+            const response = await fetch(`${ENGINE_URL}/status`);
             if (response.ok) {
                 document.getElementById('status-dot').style.backgroundColor = "#28a745";
                 document.getElementById('status-text').innerText = "Engine Online (Connected to Supabase)";
             }
         } catch (err) {
             document.getElementById('status-dot').style.backgroundColor = "#ff4d4d";
-            document.getElementById('status-text').innerText = "Engine Offline (Run python app.py)";
+            document.getElementById('status-text').innerText = "Engine Offline";
         }
     }
 
@@ -60,12 +62,12 @@
         const resultArea = document.getElementById('result-area');
 
         if (!urlInput || !codeInput) {
-            alert("Bhai, dono fields bharna zaroori hain!");
+            alert("Dono fields bharna zaroori hain!");
             return;
         }
 
         try {
-            const response = await fetch(`${LOCAL_ENGINE}/shorten`, {
+            const response = await fetch(`${ENGINE_URL}/shorten`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -77,19 +79,20 @@
             const data = await response.json();
 
             if (response.status === 201) {
+                const finalLink = `${ENGINE_URL}/${codeInput}`;
                 resultArea.style.display = "block";
                 resultArea.className = "success";
-                resultArea.innerHTML = `<strong>✅ Saved!</strong><br>Short Link: <a href="${LOCAL_ENGINE}/${codeInput}" target="_blank">${LOCAL_ENGINE}/${codeInput}</a>`;
+                resultArea.innerHTML = `<strong>✅ Link Created!</strong><br><a href="${finalLink}" target="_blank">${finalLink}</a>`;
             } else {
                 alert("Error: " + data.message);
             }
         } catch (err) {
-            alert("Backend Engine se contact nahi ho raha. Check karein ke terminal mein 'python app.py' chal raha hai?");
+            alert("Backend se contact nahi ho raha.");
         }
     }
 
-    // Check status every 4 seconds
-    setInterval(checkConnection, 4000);
+    // Check status every 5 seconds
+    setInterval(checkConnection, 5000);
     checkConnection();
 </script>
 
