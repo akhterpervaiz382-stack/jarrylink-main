@@ -1,5 +1,8 @@
 {
+  "version": 2,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
+    { "source": "/status", "destination": "/api/index" },
+    { "source": "/shorten", "destination": "/api/index" },
+    { "source": "/:path*", "destination": "/api/index" }
   ]
 }
