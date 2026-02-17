@@ -7,55 +7,50 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, template_folder='../templates')
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
-url = os.environ.get("SUPABASE_URL")
-key = os.environ.get("SUPABASE_KEY")
-supabase = create_client(url, key)
+# Supabase Connection
+supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
 @app.route('/')
 def home():
-    try:
-        return render_template('architect_tool.html')
-    except Exception as e:
-        return jsonify({"error": "Template not found"}), 500
+    return render_template('architect_tool.html')
 
 @app.route('/status')
 def status():
-    return jsonify({
-        "status": "Architect Engine Online",
-        "project": "JarryLink"
-    })
+    return jsonify({"status": "online"})
 
 @app.route('/shorten', methods=['POST'])
-def create_short_link():
+def create():
     try:
         data = request.get_json()
-        original_url = data.get('original_url')
-        short_code = data.get('short_code')
-
-        check = supabase.table('links').select("short_code").eq("short_code", short_code).execute()
-        if check.data and len(check.data) > 0:
+        s_code = data.get('short_code').strip()
+        l_url = data.get('original_url').strip()
+        
+        # Check if exists
+        check = supabase.table('links').select("*").eq("short_code", s_code).execute()
+        if check.data:
             return jsonify({"status": "error", "message": "Booked!"}), 400
 
-        entry = {"short_code": short_code, "original_url": original_url, "clicks": 0}
-        supabase.table('links').insert(entry).execute()
+        supabase.table('links').insert({"short_code": s_code, "original_url": l_url, "clicks": 0}).execute()
         return jsonify({"status": "success"}), 201
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
-@app.route('/<short_code>')
-def redirect_to_url(short_code):
-    if short_code in ["favicon.ico", "status"]: 
-        return "", 204
+# YE HAI GAME-CHANGER ROUTE
+@app.route('/<path:short_code>')
+def redirect_logic(short_code):
+    # Ignore static files
+    if short_code in ["favicon.ico", "status", "api"]: return "", 204
+    
     try:
-        result = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
-        if result.data:
-            url = result.data[0]['original_url']
+        res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
+        if res.data:
+            url = res.data[0]['original_url']
             if not url.startswith(('http://', 'https://')): url = 'https://' + url
             return redirect(url)
-        return "Link Not Found", 404
+        return f"<h1>404 - Link Not Found</h1><p>'{short_code}' is not registered.</p>", 404
     except:
-        return redirect("/")
+        return redirect('/')
 
 app = app
