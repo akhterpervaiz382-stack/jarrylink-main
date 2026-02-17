@@ -8,7 +8,7 @@
     <style>
         .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
         /* Is se link par mouse le jane par cursor pointer banega magar address show nahi hoga */
-        #displayLink { cursor: pointer; user-select: none; }
+        #displayLink { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4 font-sans">
@@ -44,7 +44,7 @@
 
         <div id="result" class="mt-8 hidden p-6 bg-emerald-400/10 border border-emerald-400/30 rounded-[2rem]">
             <p class="text-[10px] text-emerald-400 uppercase font-bold mb-2">Live Branded Link</p>
-            <div id="displayLink" onclick="openDirectly()" class="text-2xl font-bold text-white hover:text-emerald-400 transition-all break-all">
+            <div id="displayLink" onclick="openDirectly(event)" class="text-2xl font-bold text-white hover:text-emerald-400 transition-all break-all">
                 jarrylink/Name
             </div>
             <button onclick="copyLink()" class="mt-4 text-[10px] bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-emerald-400 transition-all">
@@ -77,7 +77,6 @@
                 document.getElementById('result').classList.remove('hidden');
                 document.getElementById('displayLink').innerText = `jarrylink/${short_code}`;
                 
-                // Target URL ko local variable mein save kiya
                 finalTargetUrl = original_url.startsWith('http') ? original_url : 'https://' + original_url;
                 
                 btn.innerText = "GENERATE LINK";
@@ -88,10 +87,24 @@
             btn.disabled = false;
         }
 
-        // Ye function hamari site ko involve kiye baghair seedha target kholta hai
-        function openDirectly() {
+        // Professional Masking Redirect (Double Trick Logic)
+        function openDirectly(e) {
+            if (e) e.preventDefault(); // Browser preview rokne ke liye
+            
             if(finalTargetUrl) {
-                window.open(finalTargetUrl, '_blank');
+                try {
+                    // Trick 1: Invisible Ghost Anchor (Best for rb.gy style)
+                    const mask = document.createElement('a');
+                    mask.href = finalTargetUrl;
+                    mask.target = '_blank';
+                    mask.rel = 'noopener noreferrer';
+                    document.body.appendChild(mask);
+                    mask.click();
+                    document.body.removeChild(mask);
+                } catch (err) {
+                    // Trick 2: Fallback (Agar Trick 1 fail ho jaye)
+                    window.open(finalTargetUrl, '_blank');
+                }
             }
         }
 
@@ -105,4 +118,3 @@
     </script>
 </body>
 </html>
-
