@@ -1,47 +1,58 @@
-let finalTargetUrl = ""; // Ismein asli target save hoga
+import os
+from flask import Flask, request, jsonify, make_response, render_template
+from flask_cors import CORS
+from supabase import create_client
+from dotenv import load_dotenv
 
-async function shortenLink() {
-    const original_url = document.getElementById('longUrl').value;
-    let short_code = document.getElementById('shortCode').value.trim();
-    const btn = document.getElementById('btn');
+load_dotenv()
 
-    if(!original_url) return alert("Pehle URL dalein!");
+app = Flask(__name__, template_folder='../templates')
+CORS(app)
+
+supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
+
+@app.route('/<short_code>')
+def redirect_logic(short_code):
+    if short_code in ["favicon.ico", "status", "shorten", "static"]:
+        return "", 204
     
-    btn.innerText = "ARCHITECTING...";
-    btn.disabled = true;
+    try:
+        res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
+        if res.data and len(res.data) > 0:
+            target = res.data[0]['original_url']
+            if not target.startswith(('http://', 'https://')): 
+                target = 'https://' + target
+            
+            # Fast Invisible Redirect
+            response = make_response("", 301)
+            response.headers['Location'] = target
+            response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+            return response
+    except:
+        pass
+    return redirect('/')
 
-    const res = await fetch('/shorten', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ original_url, short_code })
-    });
+@app.route('/')
+def home():
+    try:
+        response = make_response(render_template('architect_tool.html'))
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        return response
+    except:
+        return "Template Error", 500
 
-    if(res.ok) {
-        document.getElementById('result').classList.remove('hidden');
-        document.getElementById('displayLink').innerText = `jarrylink/${short_code}`;
-        
-        // Asli target URL ko memory mein save kar liya (Browser ko nahi dikhaya)
-        finalTargetUrl = original_url.startsWith('http') ? original_url : 'https://' + original_url;
-        
-        btn.innerText = "GENERATE LINK";
-    } else {
-        alert("Error: Try another name!");
-        btn.innerText = "TRY AGAIN";
-    }
-    btn.disabled = false;
-}
+@app.route('/shorten', methods=['POST'])
+def shorten():
+    try:
+        data = request.get_json()
+        s_code, l_url = data.get('short_code').strip(), data.get('original_url').strip()
+        supabase.table('links').insert({"short_code": s_code, "original_url": l_url, "clicks": 0}).execute()
+        return jsonify({"status": "success"}), 201
+    except:
+        return jsonify({"status": "error"}), 400
 
-// Ye function bina hamari site dikhaye seedha target khol dega
-function openDirectly() {
-    if(finalTargetUrl) {
-        window.open(finalTargetUrl, '_blank');
-    }
-}
+@app.route('/status')
+def status():
+    return jsonify({"status": "online"})
 
-function copyLink() {
-    const display = document.getElementById('displayLink').innerText;
-    const code = display.split('/')[1];
-    const final = "https://www.jarrylink.site/" + code;
-    navigator.clipboard.writeText(final);
-    alert("Copied: " + final);
-}
+app = app
