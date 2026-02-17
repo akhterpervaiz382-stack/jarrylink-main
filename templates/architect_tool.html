@@ -40,11 +40,17 @@
                     <input type="text" id="shortCode" placeholder="MyName" 
                            class="w-full p-3 bg-transparent outline-none">
                 </div>
+           <div>
+                <label class="block text-sm mb-1 text-gray-300">Custom Path (e.g., MyName)</label>
+                <div class="flex items-center bg-black/20 rounded-xl border border-white/10 overflow-hidden focus-within:border-emerald-500">
+                    <span class="pl-3 text-emerald-400 font-bold text-sm">jarrylink/</span>
+                    <input type="text" id="shortCode" placeholder="MyName" 
+                           class="w-full p-3 bg-transparent outline-none text-white">
+                </div>
             </div>
             <button onclick="shortenLink()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition-all shadow-lg shadow-emerald-900/20">
-                Generate Custom Link
+                Generate Branded Link
             </button>
-        </div>
 
         <div id="result" class="mt-6 hidden p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-xl">
             <p class="text-sm text-emerald-400">Success! Your custom link is ready:</p>
