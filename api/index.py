@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 # 1. Environment variables load karein
 load_dotenv()
 
-# 2. Flask Initialize
-app = Flask(__name__)
+# 2. Flask Initialize (Vercel ke liye template folder ka path set kiya hai)
+app = Flask(__name__, template_folder='../templates')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # 3. Supabase Connection
@@ -18,20 +18,22 @@ supabase = create_client(url, key)
 
 # --- ROUTES ---
 
-# A. Home Route
+# A. Home Route (Ab ye seedha Tool dikhayega)
 @app.route('/')
 def home():
+    try:
+        return render_template('architect_tool.html')
+    except Exception as e:
+        return jsonify({"error": "Template not found", "details": str(e)}), 500
+
+# B. Status Route (Dot Green karne ke liye)
+@app.route('/status')
+def status():
     return jsonify({
         "status": "Architect Engine Online",
         "project": "JarryLink",
-        "message": "System is healthy and connected to Mumbai Database"
+        "message": "Connected to Supabase"
     })
-
-# B. Tool Route (Naya Page Open karne ke liye)
-@app.route('/tool')
-def open_tool():
-    # Ensure karein architect_tool.html aapke 'templates' folder mein hai
-    return render_template('architect_tool.html')
 
 # C. Link Create Karne Ka Route
 @app.route('/shorten', methods=['POST'])
@@ -44,6 +46,7 @@ def create_short_link():
         if not original_url or not short_code:
             return jsonify({"status": "error", "message": "Missing URL or Code"}), 400
 
+        # Smart Check: Try 'links' table (agar 'urls' table hai toh yahan badal dein)
         entry = {
             "short_code": short_code,
             "original_url": original_url,
@@ -51,40 +54,33 @@ def create_short_link():
         }
         supabase.table('links').insert(entry).execute()
         
-        print(f"✅ New Link Created: {short_code} -> {original_url}")
-        return jsonify({"status": "success", "message": "Link saved to Database!"}), 201
+        return jsonify({"status": "success", "message": "Link saved!"}), 201
 
     except Exception as e:
-        print(f"⚠️ Create Error: {str(e)}")
         return jsonify({"status": "error", "message": str(e)}), 400
 
 # D. Redirect Logic
 @app.route('/<short_code>')
 def redirect_to_url(short_code):
-    # Favicon request ko ignore karein taaki database error na aaye
-    if short_code == "favicon.ico": 
+    if short_code in ["favicon.ico", "status", "tool"]: 
         return "", 204
         
     try:
-        print(f"🔍 Searching for: {short_code}")
         result = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
         
         if result.data and len(result.data) > 0:
-            url = result.data[0]['original_url']
-            print(f"🚀 Redirecting to: {url}")
-            return redirect(url)
+            target_url = result.data[0]['original_url']
+            if not target_url.startswith(('http://', 'https://')):
+                target_url = 'https://' + target_url
+            return redirect(target_url)
         else:
-            print("❌ Code not found.")
-            return "<h1>Link Not Found!</h1><p>Check your URL at jarrylink.site</p>", 404
+            return f"<h1>Link Not Found!</h1><p>No link for '{short_code}' found on JarryLink.</p>", 404
             
     except Exception as e:
-        print(f"⚠️ Redirect Error: {str(e)}")
-        return redirect("https://jarrylink.site")
+        return redirect("/")
 
-# 4. Engine Start
+# 4. Vercel ke liye 'app' export karna zaroori hai
+app = app
+
 if __name__ == '__main__':
-    print("\n" + "="*30)
-    print("🚀 JARRYLABS ARCHITECT IS LIVE!")
-    print(f"📍 Tool URL: http://127.0.0.1:5000/tool")
-    print("="*30 + "\n")
     app.run(port=5000, debug=True)
