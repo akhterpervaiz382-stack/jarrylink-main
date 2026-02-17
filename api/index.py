@@ -14,6 +14,32 @@ url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
 supabase = create_client(url, key)
 
+# 1. Sabse pehle redirect logic (Priority) - Is se redirection fast ho jati hai
+@app.route('/<short_code>')
+def redirect_logic(short_code):
+    # In routes ko redirect nahi karna, ye system ke liye hain
+    if short_code in ["favicon.ico", "status", "shorten", "static"]:
+        return "", 204
+    
+    try:
+        # Database se direct record uthayein
+        res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
+        
+        if res.data and len(res.data) > 0:
+            target = res.data[0]['original_url']
+            if not target.startswith(('http://', 'https://')): 
+                target = 'https://' + target
+            
+            # code=301 (Permanent Redirect) rb.gy ki tarah instant speed ke liye
+            return redirect(target, code=301)
+            
+    except Exception:
+        pass
+        
+    # Agar code nahi mila toh home page par bhej dein
+    return redirect('/')
+
+# 2. Home Route (Sirf tab khulega jab koi path nahi hoga)
 @app.route('/')
 def home():
     try:
@@ -47,20 +73,6 @@ def shorten():
         return jsonify({"status": "success"}), 201
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
-
-@app.route('/<path:short_code>')
-def redirect_logic(short_code):
-    if short_code in ["favicon.ico", "status"]: return "", 204
-    try:
-        res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
-        if res.data:
-            target = res.data[0]['original_url']
-            if not target.startswith(('http://', 'https://')): target = 'https://' + target
-            # Yahan humne sirf code=301 add kiya hai fast redirection ke liye
-            return redirect(target, code=301)
-        return "<h1>404 - Link Not Found</h1>", 404
-    except:
-        return redirect('/')
 
 # Important for Vercel
 app = app
