@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, make_response, render_template
+from flask import Flask, request, jsonify, make_response, render_template, redirect
 from flask_cors import CORS
 from supabase import create_client
 from dotenv import load_dotenv
