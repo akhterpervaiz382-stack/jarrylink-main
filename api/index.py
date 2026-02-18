@@ -7,7 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, template_folder='../templates')
-CORS(app)
+
+# --- SIRF YAHAN TABDEELI KI HAI TAAKE BLOGGER CONNECT HO SAKE ---
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
@@ -26,7 +28,7 @@ def redirect_logic(short_code):
             target = res.data[0]['original_url']
             current_clicks = res.data[0].get('clicks', 0)
             
-            # 2. Click count ko +1 kar ke update karein (Ye "Extra" part hai)
+            # 2. Click count ko +1 kar ke update karein
             try:
                 supabase.table('links').update({"clicks": current_clicks + 1}).eq("short_code", short_code).execute()
             except:
@@ -35,7 +37,7 @@ def redirect_logic(short_code):
             if not target.startswith(('http://', 'https://')): 
                 target = 'https://' + target
             
-            # 3. Headers wala direct redirect (Jo pehle tha)
+            # 3. Headers wala direct redirect
             response = make_response("", 302) 
             response.headers['Location'] = target
             response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
