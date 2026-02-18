@@ -7,19 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        
-        /* Masking Magic: Is se browser status bar update nahi karta */
-        #displayLink { 
-            cursor: pointer; 
-            user-select: none; 
-            -webkit-user-select: none;
-            touch-action: manipulation;
-        }
-
-        /* Taake browser text ko link na samjhe */
-        .mask-text {
-            pointer-events: none;
-        }
+        #displayLink { cursor: pointer; user-select: none; -webkit-user-select: none; }
+        .mask-text { pointer-events: none; }
     </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4 font-sans">
@@ -37,14 +26,14 @@
             <div>
                 <label class="text-xs text-gray-500 ml-2 uppercase font-bold">Long URL</label>
                 <input type="text" id="longUrl" placeholder="https://youtube.com/..." 
-                       class="w-full p-4 rounded-2xl bg-black/30 border border-white/10 focus:border-emerald-500 outline-none transition-all">
+                       class="w-full p-4 rounded-2xl bg-black/30 border border-white/10 focus:border-emerald-500 outline-none transition-all text-white">
             </div>
 
             <div>
                 <label class="text-xs text-gray-500 ml-2 uppercase font-bold">Branded Name</label>
                 <div class="flex items-center bg-black/30 rounded-2xl border border-white/10 focus-within:border-emerald-500 overflow-hidden">
                     <span class="pl-4 text-emerald-400 font-bold italic">jarrylink/</span>
-                    <input type="text" id="shortCode" placeholder="MyLink" class="w-full p-4 bg-transparent outline-none">
+                    <input type="text" id="shortCode" placeholder="MyLink" class="w-full p-4 bg-transparent outline-none text-white">
                 </div>
             </div>
 
@@ -57,84 +46,69 @@
             <p class="text-[10px] text-emerald-400 uppercase font-bold mb-2">Live Branded Link</p>
             
             <div id="displayLink" 
-                 role="button"
-                 onmouseover="window.status=' '; return true;"
-                 onmousedown="window.status=' '; return true;"
-                 onclick="openDirectly(event)" 
-                 class="text-2xl font-bold text-white hover:text-emerald-400 transition-all break-all">
+                 onclick="copyLink()" 
+                 class="text-3xl font-bold text-white hover:text-emerald-400 transition-all break-all italic">
                 <span class="mask-text" id="linkSpan">jarrylink/Name</span>
             </div>
 
-            <button onclick="copyLink()" class="mt-4 text-[10px] bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-emerald-400 transition-all">
-                COPY FOR WEB
+            <button onclick="copyLink()" id="copyBtn" class="mt-4 text-[10px] bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-emerald-400 transition-all">
+                COPY CLEAN LINK
             </button>
         </div>
     </div>
 
     <script>
-        let finalTargetUrl = ""; 
-
         async function shortenLink() {
             const original_url = document.getElementById('longUrl').value;
             let short_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
 
-            if(!original_url) return alert("Pehle URL dalein!");
+            if(!original_url) return alert("URL zaroori hai!");
             if(!short_code) short_code = Math.random().toString(36).substring(7);
 
             btn.innerText = "ARCHITECTING...";
             btn.disabled = true;
 
-            const res = await fetch('/shorten', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ original_url, short_code })
-            });
+            try {
+                const res = await fetch('/shorten', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ original_url, short_code })
+                });
 
-            if(res.ok) {
-                document.getElementById('result').classList.remove('hidden');
-                document.getElementById('linkSpan').innerText = `jarrylink/${short_code}`;
-                
-                finalTargetUrl = original_url.startsWith('http') ? original_url : 'https://' + original_url;
-                btn.innerText = "GENERATE LINK";
-            } else {
-                alert("Error: Try another name!");
-                btn.innerText = "TRY AGAIN";
+                if(res.ok) {
+                    document.getElementById('result').classList.remove('hidden');
+                    // Yahan hum sirf jarrylink/ dikha rahe hain
+                    document.getElementById('linkSpan').innerText = `jarrylink/${short_code}`;
+                    btn.innerText = "GENERATE LINK";
+                } else {
+                    alert("Try another name!");
+                    btn.innerText = "TRY AGAIN";
+                }
+            } catch (e) {
+                alert("Connection Error!");
             }
             btn.disabled = false;
-        }
-
-        // The Ultimate Masking Redirect
-        function openDirectly(e) {
-            if (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            
-            if(finalTargetUrl) {
-                // Ghost Mode: Ek bilkul temporary element banayein jo browser monitor na kar sake
-                const vault = document.createElement('form');
-                vault.action = finalTargetUrl;
-                vault.method = 'GET';
-                vault.target = '_blank';
-                vault.rel = 'noopener noreferrer';
-                document.body.appendChild(vault);
-                vault.submit();
-                document.body.removeChild(vault);
-            }
-            return false;
         }
 
         function copyLink() {
             const display = document.getElementById('linkSpan').innerText;
             const code = display.split('/')[1];
-            const final = "https://www.jarrylink.site/" + code;
-            navigator.clipboard.writeText(final);
-            alert("Professional Link Copied!");
+            
+            // Paste karne par ye asli URL ban jayega, lekin user ko sirf jarrylink/code dikhayega
+            const finalLink = "https://jarrylink.site/" + code;
+            
+            navigator.clipboard.writeText(finalLink).then(() => {
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.innerText = "COPIED TO CLIPBOARD!";
+                copyBtn.classList.replace('bg-white', 'bg-emerald-400');
+                
+                setTimeout(() => {
+                    copyBtn.innerText = "COPY CLEAN LINK";
+                    copyBtn.classList.replace('bg-emerald-400', 'bg-white');
+                }, 2000);
+            });
         }
-        
-        // Anti-Status Bar Hack
-        document.getElementById('displayLink').addEventListener('mouseenter', () => window.status = '');
     </script>
 </body>
 </html>
