@@ -11,7 +11,7 @@ CORS(app)
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# --- ULTRA-FAST SILENT REDIRECT ---
+# --- ULTRA-FAST SILENT REDIRECT (With Click Counter) ---
 @app.route('/<short_code>')
 def redirect_logic(short_code):
     # System files ignore karein
@@ -19,15 +19,24 @@ def redirect_logic(short_code):
         return "", 204
     
     try:
-        res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
+        # 1. Database se link aur purane clicks fetch karein
+        res = supabase.table('links').select("original_url, clicks").eq("short_code", short_code).execute()
+        
         if res.data and len(res.data) > 0:
             target = res.data[0]['original_url']
+            current_clicks = res.data[0].get('clicks', 0)
+            
+            # 2. Click count ko +1 kar ke update karein (Ye "Extra" part hai)
+            try:
+                supabase.table('links').update({"clicks": current_clicks + 1}).eq("short_code", short_code).execute()
+            except:
+                pass # Agar update fail ho tab bhi user ko redirect hona chahiye
+
             if not target.startswith(('http://', 'https://')): 
                 target = 'https://' + target
             
-            # 301 ki jagah hum Headers wala direct redirect bhej rahe hain 
-            # jo browser ke cache ko bypass karke seedha target marta hai
-            response = make_response("", 302) # 302 is faster for non-cached jumps
+            # 3. Headers wala direct redirect (Jo pehle tha)
+            response = make_response("", 302) 
             response.headers['Location'] = target
             response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
             response.headers['Pragma'] = 'no-cache'
@@ -38,7 +47,7 @@ def redirect_logic(short_code):
         
     return redirect('/')
 
-# --- HOME & SHORTEN LOGIC (Wohi rakha hai jo aapne diya tha) ---
+# --- HOME & SHORTEN LOGIC (Bilkul wahi jo aapne diya) ---
 @app.route('/')
 def home():
     try:
