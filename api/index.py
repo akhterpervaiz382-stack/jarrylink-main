@@ -8,69 +8,56 @@ load_dotenv()
 
 app = Flask(__name__, template_folder='../templates')
 
-# --- SIRF YAHAN TABDEELI KI HAI TAAKE BLOGGER CONNECT HO SAKE ---
-CORS(app, resources={r"/*": {"origins": "*"}})
+# --- FIX: Sabse safe tareeqa CORS handle karne ka ---
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# --- ULTRA-FAST SILENT REDIRECT (With Click Counter) ---
 @app.route('/<short_code>')
 def redirect_logic(short_code):
-    # System files ignore karein
     if short_code in ["favicon.ico", "status", "shorten", "static"]:
         return "", 204
-    
     try:
-        # 1. Database se link aur purane clicks fetch karein
         res = supabase.table('links').select("original_url, clicks").eq("short_code", short_code).execute()
-        
         if res.data and len(res.data) > 0:
             target = res.data[0]['original_url']
             current_clicks = res.data[0].get('clicks', 0)
             
-            # 2. Click count ko +1 kar ke update karein
+            # Click update logic
             try:
                 supabase.table('links').update({"clicks": current_clicks + 1}).eq("short_code", short_code).execute()
             except:
-                pass # Agar update fail ho tab bhi user ko redirect hona chahiye
+                pass
 
             if not target.startswith(('http://', 'https://')): 
                 target = 'https://' + target
             
-            # 3. Headers wala direct redirect
-            response = make_response("", 302) 
+            response = make_response("", 302)
             response.headers['Location'] = target
             response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
-            response.headers['Pragma'] = 'no-cache'
             return response
-            
     except Exception as e:
         print(f"Error: {e}")
-        
     return redirect('/')
 
-# --- HOME & SHORTEN LOGIC (Bilkul wahi jo aapne diya) ---
 @app.route('/')
 def home():
-    try:
-        return render_template('architect_tool.html')
-    except:
-        return "Home Page Ready", 200
+    return render_template('architect_tool.html')
 
-@app.route('/shorten', methods=['POST'])
+@app.route('/shorten', methods=['POST', 'OPTIONS']) # OPTIONS add kiya hai for Blogger safety
 def shorten():
+    if request.method == 'OPTIONS':
+        return jsonify({"status": "ok"}), 200
     try:
         data = request.get_json(silent=True) or request.form
         s_code = data.get('short_code', '').strip()
         l_url = data.get('original_url', '').strip()
-
         if not s_code or not l_url:
             return jsonify({"status": "error"}), 400
 
         supabase.table('links').insert({
             "short_code": s_code, "original_url": l_url, "clicks": 0
         }).execute()
-        
         return jsonify({"status": "success"}), 201
     except:
         return jsonify({"status": "error"}), 400
