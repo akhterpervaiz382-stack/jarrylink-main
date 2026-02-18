@@ -8,7 +8,7 @@ load_dotenv()
 
 app = Flask(__name__, template_folder='../templates')
 
-# --- YAHAN AB BLOGGER KA ADDRESS EXPLICITLY ALLOW KAR DIYA HAI ---
+# --- CORS: Blogger aur Custom Domain dono allow hain ---
 CORS(app, resources={r"/*": {
     "origins": ["https://jarrylink.blogspot.com", "http://jarrylink.blogspot.com", "https://jarrylink.site"],
     "methods": ["GET", "POST", "OPTIONS"],
@@ -32,6 +32,7 @@ def redirect_logic(short_code):
                 pass
             if not target.startswith(('http://', 'https://')): 
                 target = 'https://' + target
+            
             response = make_response("", 302)
             response.headers['Location'] = target
             response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
@@ -61,5 +62,3 @@ def shorten():
         return jsonify({"status": "success"}), 201
     except:
         return jsonify({"status": "error"}), 400
-
-app = app
