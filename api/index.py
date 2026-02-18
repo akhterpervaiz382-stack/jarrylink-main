@@ -8,8 +8,12 @@ load_dotenv()
 
 app = Flask(__name__, template_folder='../templates')
 
-# --- FIX: Sabse safe tareeqa CORS handle karne ka ---
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+# --- YAHAN AB BLOGGER KA ADDRESS EXPLICITLY ALLOW KAR DIYA HAI ---
+CORS(app, resources={r"/*": {
+    "origins": ["https://jarrylink.blogspot.com", "http://jarrylink.blogspot.com", "https://jarrylink.site"],
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Accept"]
+}})
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
@@ -22,16 +26,12 @@ def redirect_logic(short_code):
         if res.data and len(res.data) > 0:
             target = res.data[0]['original_url']
             current_clicks = res.data[0].get('clicks', 0)
-            
-            # Click update logic
             try:
                 supabase.table('links').update({"clicks": current_clicks + 1}).eq("short_code", short_code).execute()
             except:
                 pass
-
             if not target.startswith(('http://', 'https://')): 
                 target = 'https://' + target
-            
             response = make_response("", 302)
             response.headers['Location'] = target
             response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
@@ -44,7 +44,7 @@ def redirect_logic(short_code):
 def home():
     return render_template('architect_tool.html')
 
-@app.route('/shorten', methods=['POST', 'OPTIONS']) # OPTIONS add kiya hai for Blogger safety
+@app.route('/shorten', methods=['POST', 'OPTIONS'])
 def shorten():
     if request.method == 'OPTIONS':
         return jsonify({"status": "ok"}), 200
