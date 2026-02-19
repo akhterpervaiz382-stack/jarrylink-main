@@ -7,128 +7,95 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+# JarryLabs.com se requests allow karne ke liye CORS setup
+CORS(app, resources={r"/*": {"origins": ["https://jarrylabs.com", "http://localhost:3000"]}})
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# --- FIVERR GREEN & BLACK PREMIUM INTERFACE (Clean Branding) ---
+# --- JARRYLABS PREMIUM INTERFACE ---
 HTML_TOOL = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JarryLink | #1 Free URL Shortener & Branded Link Architect</title>
+    <title>JarryLabs | Professional URL Shortener & SEO Architect</title>
     
-    <meta name="description" content="JarryLink is the ultimate bitly alternative and free url shortener with custom name. Create branded links easily.">
-    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener, bitly alternative, jarrylink, jarrylabs">
+    <meta name="description" content="JarryLabs provides the best free custom url shortener. Create branded links, ai video shortener links, and optimize your SEO strategy with our advanced link architect.">
+    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener free online, sentence shortener, paragraph shortener, google url shortener free, bitly alternative, best free url shortener, url shortener with custom name, jarrylabs, link management">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { --fiverr-green: #1dbf73; --deep-black: #0a0a0a; --soft-black: #121212; --border-color: #2d2d2d; }
-        body { background-color: var(--deep-black); font-family: 'Manrope', sans-serif; color: #ffffff; }
-        .fiverr-bg { background-color: var(--fiverr-green); }
+        :root { --fiverr-green: #1dbf73; --deep-black: #0a0a0a; --soft-black: #121212; }
+        body { background-color: var(--deep-black); font-family: 'Manrope', sans-serif; color: white; }
         .fiverr-text { color: var(--fiverr-green); }
-        .nav-link:hover { color: var(--fiverr-green); }
-        .glass-card { background: var(--soft-black); border: 1px solid var(--border-color); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        input:focus { border-color: var(--fiverr-green) !important; }
+        .fiverr-bg { background-color: var(--fiverr-green); }
+        .glass-card { background: var(--soft-black); border: 1px solid #2d2d2d; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .btn-main { background-color: var(--fiverr-green); color: white; font-weight: 800; transition: all 0.3s ease; }
         .btn-main:hover { transform: scale(1.02); filter: brightness(1.1); }
-        .animate-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
     <header class="border-b border-white/5 sticky top-0 z-50 bg-black/80 backdrop-blur-md">
         <nav class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="flex items-center">
-                <span class="text-3xl font-extrabold tracking-tighter text-white">Jarry<span class="fiverr-text">Link.</span></span>
-            </div>
+            <span class="text-3xl font-extrabold tracking-tighter">Jarry<span class="fiverr-text">Labs.</span></span>
             <div class="hidden md:flex space-x-10 text-[11px] font-bold uppercase tracking-[0.2em]">
-                <a href="/" class="nav-link transition-all">Home</a>
-                <a href="#" class="nav-link transition-all">Blog</a>
-                <a href="#" class="nav-link transition-all">Best Tools</a>
-                <a href="#" class="nav-link transition-all text-emerald-400">About Us</a>
-                <a href="#" class="nav-link transition-all">Contact</a>
+                <a href="#" class="hover:text-[#1dbf73]">Tools</a>
+                <a href="#" class="hover:text-[#1dbf73]">SEO Strategy</a>
+                <a href="#" class="hover:text-[#1dbf73]">Fiverr Services</a>
             </div>
-            <div><button class="border border-white/20 px-6 py-2 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all font-black uppercase">Get Started</button></div>
         </nav>
     </header>
 
     <main class="flex-grow flex items-center justify-center py-20 px-4">
-        <div class="max-w-5xl w-full text-center">
-            <span class="fiverr-text font-bold text-xs uppercase tracking-[0.5em] mb-4 block">Professional Grade URL Architect</span>
-            <h2 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter leading-[0.9]">
-                Shorten. Brand. <br><span class="fiverr-text italic">Optimize.</span>
-            </h2>
+        <div class="max-w-4xl w-full text-center">
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter">
+                Architect Your <br><span class="fiverr-text italic">Unstoppable</span> Link
+            </h1>
             
-            <div class="glass-card p-4 rounded-[2.5rem] max-w-3xl mx-auto mt-12">
-                <div class="bg-[#181818] rounded-[2.2rem] p-8 md:p-12">
-                    <div class="space-y-8">
-                        <div class="text-left">
-                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Target URL</label>
-                            <input type="text" id="longUrl" placeholder="https://example.com/very-long-link" 
-                                class="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-fiverr-green outline-none transition-all text-sm">
+            <div class="glass-card p-4 rounded-[2.5rem] max-w-3xl mx-auto">
+                <div class="bg-[#181818] rounded-[2.2rem] p-8 md:p-12 space-y-8">
+                    <div class="text-left space-y-6">
+                        <div>
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-2">Destination URL</label>
+                            <input type="text" id="longUrl" placeholder="https://..." class="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-fiverr-green outline-none transition-all text-sm">
                         </div>
-                        
-                        <div class="text-left">
-                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Custom Alias</label>
-                            <div class="flex items-center bg-black/40 border border-white/10 rounded-2xl overflow-hidden">
-                                <span class="pl-6 text-emerald-500 font-black italic text-sm">jarrylink/</span>
-                                <input type="text" id="shortCode" placeholder="alias" 
-                                    class="w-full bg-transparent p-5 outline-none text-white text-sm font-bold">
+                        <div>
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-2">Branded Alias</label>
+                            <div class="flex items-center bg-black/40 border border-white/10 rounded-2xl overflow-hidden focus-within:border-fiverr-green">
+                                <span class="pl-6 fiverr-text font-black italic">jarrylabs/</span>
+                                <input type="text" id="shortCode" placeholder="alias" class="w-full bg-transparent p-5 outline-none text-white font-bold">
                             </div>
                         </div>
-
-                        <button onclick="shortenLink()" id="btn" class="btn-main w-full py-5 rounded-2xl uppercase tracking-[0.2em] text-sm shadow-2xl shadow-emerald-500/10 active:scale-95">
-                            Generate Link
-                        </button>
                     </div>
 
-                    <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl animate-in">
-                        <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Branded Link Ready</p>
-                        <div class="text-4xl font-extrabold mb-8 tracking-tighter text-white italic" id="linkSpan">jarrylink/name</div>
+                    <button onclick="shortenLink()" id="btn" class="btn-main w-full py-5 rounded-2xl uppercase tracking-widest text-sm shadow-xl shadow-emerald-500/10">
+                        Generate Branded Link
+                    </button>
+
+                    <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl animate-pulse">
+                        <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Architected Successfully!</p>
+                        <div class="text-4xl font-extrabold mb-8 italic" id="linkSpan">jarrylabs/name</div>
                         <div class="flex gap-4">
-                             <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg shadow-fiverr-green/20">Copy URL</button>
-                             <button onclick="visitLink()" class="bg-white text-black px-8 rounded-xl font-bold text-xs uppercase hover:bg-fiverr-green hover:text-white transition-all">Visit</button>
+                             <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest">Copy URL</button>
+                             <button onclick="visitLink()" class="bg-white text-black px-8 rounded-xl font-bold text-xs uppercase">Visit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-    <footer class="bg-[#050505] border-t border-white/5 py-12 px-6">
-        <div class="max-w-7xl mx-auto text-center md:text-left grid md:grid-cols-4 gap-10">
-            <div class="col-span-2">
-                <span class="text-2xl font-black italic text-white">JarryLink.</span>
-                <p class="text-gray-500 mt-4 text-sm max-w-xs">Premium link management and SEO optimization by JarryLabs.</p>
-            </div>
-            <div>
-                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-4">Legal</h4>
-                <ul class="text-sm text-gray-500 space-y-2">
-                    <li>Privacy Policy</li><li>Terms</li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-4">Company</h4>
-                <ul class="text-sm text-gray-500 space-y-2">
-                    <li>About Us</li><li class="fiverr-text">JarryLabs.com</li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
+    
     <script>
         let currentAlias = "";
         async function shortenLink() {
             const l_url = document.getElementById('longUrl').value;
             let s_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
-            if(!l_url) return alert("Pehle URL dalo!");
+            if(!l_url) return alert("Pehle URL dalo bhai!");
             
             btn.innerText = "ARCHITECTING..."; btn.disabled = true;
             currentAlias = s_code || Math.random().toString(36).substring(7);
@@ -141,7 +108,7 @@ HTML_TOOL = """
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('linkSpan').innerText = "jarrylink/" + currentAlias;
+                    document.getElementById('linkSpan').innerText = "jarrylabs/" + currentAlias;
                     btn.innerText = "SUCCESS!";
                 } else { alert("Alias Taken!"); btn.innerText = "TRY AGAIN"; }
             } catch (e) { alert("Error!"); }
@@ -149,16 +116,14 @@ HTML_TOOL = """
         }
 
         function copyLink() {
+            // Screen par jarrylabs dikhayega par copy asli domain (jarrylink.site) karega
             const final = window.location.origin + "/" + currentAlias;
             navigator.clipboard.writeText(final).then(() => {
                 document.getElementById('copyBtn').innerText = "COPIED!";
                 setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY URL"; }, 2000);
             });
         }
-        
-        function visitLink() {
-            window.open(window.location.origin + "/" + currentAlias, '_blank');
-        }
+        function visitLink() { window.open(window.location.origin + "/" + currentAlias, '_blank'); }
     </script>
 </body>
 </html>
@@ -179,8 +144,7 @@ def redirect_logic(short_code):
             if not target.startswith(('http://', 'https://')):
                 target = 'https://' + target
             return redirect(target, code=301)
-    except:
-        pass
+    except: pass
     return redirect('/')
 
 @app.route('/shorten', methods=['POST', 'OPTIONS'])
