@@ -78,7 +78,7 @@ HTML_TOOL = """
 
                     <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl animate-pulse">
                         <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Architected Successfully!</p>
-                        <div class="text-4xl font-extrabold mb-8 italic" id="linkSpan">jarrylabs/name</div>
+                        <div class="text-4xl font-extrabold mb-8 italic" id="linkSpan">jarry/name</div>
                         <div class="flex gap-4">
                              <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest">Copy URL</button>
                              <button onclick="visitLink()" class="bg-white text-black px-8 rounded-xl font-bold text-xs uppercase">Visit</button>
