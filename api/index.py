@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, template_folder='../templates')
+
+# CORS setting taake Blogger/Localhost se error na aaye
 CORS(app)
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
@@ -19,25 +21,24 @@ def redirect_logic(short_code):
         return "", 204
     
     try:
-        # 1. Database se link aur purane clicks fetch karein
+        # 1. Database se link fetch karein
         res = supabase.table('links').select("original_url, clicks").eq("short_code", short_code).execute()
         
         if res.data and len(res.data) > 0:
             target = res.data[0]['original_url']
             current_clicks = res.data[0].get('clicks', 0)
             
-            # 2. Click count ko +1 kar ke update karein (Ye "Extra" part hai)
+            # 2. Click count update (Background mein)
             try:
                 supabase.table('links').update({"clicks": current_clicks + 1}).eq("short_code", short_code).execute()
             except:
-                pass # Agar update fail ho tab bhi user ko redirect hona chahiye
+                pass 
 
             if not target.startswith(('http://', 'https://')): 
                 target = 'https://' + target
             
-            # 3. Headers wala direct redirect (Jo pehle tha)
-            response = make_response("", 302) 
-            response.headers['Location'] = target
+            # 3. Direct 301 Redirect (Isse domain address bar mein show nahi hota, seedha target khulta hai)
+            response = make_response(redirect(target, code=301)) 
             response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
             response.headers['Pragma'] = 'no-cache'
             return response
@@ -45,18 +46,20 @@ def redirect_logic(short_code):
     except Exception as e:
         print(f"Error: {e}")
         
-    return redirect('/')
+    return redirect('https://jarrylink.site')
 
-# --- HOME & SHORTEN LOGIC (Bilkul wahi jo aapne diya) ---
+# --- HOME & SHORTEN LOGIC ---
 @app.route('/')
 def home():
     try:
         return render_template('architect_tool.html')
     except:
-        return "Home Page Ready", 200
+        return "JarryLabs Engine Online", 200
 
-@app.route('/shorten', methods=['POST'])
+@app.route('/shorten', methods=['POST', 'OPTIONS'])
 def shorten():
+    if request.method == 'OPTIONS':
+        return jsonify({"status": "ok"}), 200
     try:
         data = request.get_json(silent=True) or request.form
         s_code = data.get('short_code', '').strip()
@@ -73,4 +76,4 @@ def shorten():
     except:
         return jsonify({"status": "error"}), 400
 
-app = app
+# DO NOT ADD 'app = app' HERE.
