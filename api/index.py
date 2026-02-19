@@ -12,14 +12,14 @@ CORS(app, resources={r"/*": {"origins": ["https://jarrylabs.com", "http://localh
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# --- JARRYLABS PREMIUM INTERFACE ---
+# --- JARRYLABS PREMIUM INTERFACE (Cute & Attractive Version) ---
 HTML_TOOL = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JarryLabs | Professional URL Shortener & SEO Architect</title>
+    <title>JarryLabs | Make Your Link Cutest & Branded</title>
     
     <meta name="description" content="JarryLabs provides the best free custom url shortener. Create branded links, ai video shortener links, and optimize your SEO strategy with our advanced link architect.">
     <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener free online, sentence shortener, paragraph shortener, google url shortener free, bitly alternative, best free url shortener, url shortener with custom name, jarrylabs, link management">
@@ -52,9 +52,10 @@ HTML_TOOL = """
 
     <main class="flex-grow flex items-center justify-center py-20 px-4">
         <div class="max-w-4xl w-full text-center">
-            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter">
-                Architect Your <br><span class="fiverr-text italic">Unstoppable</span> Link
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter leading-tight">
+                Make Your <br><span class="fiverr-text italic">Link Cutest</span>
             </h1>
+            <p class="text-gray-400 mb-10 font-bold uppercase tracking-widest text-xs">Simple • Sweet • Shortened</p>
             
             <div class="glass-card p-4 rounded-[2.5rem] max-w-3xl mx-auto">
                 <div class="bg-[#181818] rounded-[2.2rem] p-8 md:p-12 space-y-8">
@@ -64,23 +65,23 @@ HTML_TOOL = """
                             <input type="text" id="longUrl" placeholder="https://..." class="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-fiverr-green outline-none transition-all text-sm">
                         </div>
                         <div>
-                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-2">Branded Alias</label>
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-2">Your Branded Name</label>
                             <div class="flex items-center bg-black/40 border border-white/10 rounded-2xl overflow-hidden focus-within:border-fiverr-green">
-                                <span class="pl-6 fiverr-text font-black italic">jarrylabs/</span>
+                                <span class="pl-6 fiverr-text font-black italic">jarry/</span>
                                 <input type="text" id="shortCode" placeholder="alias" class="w-full bg-transparent p-5 outline-none text-white font-bold">
                             </div>
                         </div>
                     </div>
 
                     <button onclick="shortenLink()" id="btn" class="btn-main w-full py-5 rounded-2xl uppercase tracking-widest text-sm shadow-xl shadow-emerald-500/10">
-                        Generate Branded Link
+                        Generate Cute Link
                     </button>
 
-                    <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl animate-pulse">
-                        <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Architected Successfully!</p>
-                        <div class="text-4xl font-extrabold mb-8 italic" id="linkSpan">jarry/name</div>
+                    <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl">
+                        <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Your Link is Ready!</p>
+                        <div class="text-4xl font-extrabold mb-8 italic" id="linkSpan">jarrylabs/name</div>
                         <div class="flex gap-4">
-                             <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest">Copy URL</button>
+                             <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest">Copy Now</button>
                              <button onclick="visitLink()" class="bg-white text-black px-8 rounded-xl font-bold text-xs uppercase">Visit</button>
                         </div>
                     </div>
@@ -97,7 +98,7 @@ HTML_TOOL = """
             const btn = document.getElementById('btn');
             if(!l_url) return alert("Pehle URL dalo bhai!");
             
-            btn.innerText = "ARCHITECTING..."; btn.disabled = true;
+            btn.innerText = "BEAUTIFYING..."; btn.disabled = true;
             currentAlias = s_code || Math.random().toString(36).substring(7);
             
             try {
@@ -116,11 +117,10 @@ HTML_TOOL = """
         }
 
         function copyLink() {
-            // Screen par jarrylabs dikhayega par copy asli domain (jarrylink.site) karega
             const final = window.location.origin + "/" + currentAlias;
             navigator.clipboard.writeText(final).then(() => {
                 document.getElementById('copyBtn').innerText = "COPIED!";
-                setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY URL"; }, 2000);
+                setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY NOW"; }, 2000);
             });
         }
         function visitLink() { window.open(window.location.origin + "/" + currentAlias, '_blank'); }
