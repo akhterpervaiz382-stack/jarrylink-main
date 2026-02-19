@@ -9,20 +9,21 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+# Supabase Connection
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# Ye route home page ke liye hai taake 'Not Found' na aaye
 @app.route('/')
 def home():
-    return "JarryLink Engine Online", 200
+    return "JarryLink Engine Online & Ready", 200
 
-# Ye main redirect logic hai
 @app.route('/<short_code>')
 def redirect_logic(short_code):
+    # System requests ko ignore karein
     if short_code in ["favicon.ico", "status", "shorten", "static"]:
         return "", 204
     
     try:
+        # Database se URL uthana
         res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
         
         if res.data and len(res.data) > 0:
@@ -30,17 +31,16 @@ def redirect_logic(short_code):
             if not target.startswith(('http://', 'https://')):
                 target = 'https://' + target
             
-            # 301 Redirect: Sabse fast aur invisible tareeqa
+            # --- SUPER FAST REDIRECT ---
             response = make_response(redirect(target, code=301))
             response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
             return response
-            
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"Error: {e}")
     
-    return redirect('https://jarrylink.site', code=302)
+    # Agar code na mile to home par bhej do
+    return redirect('/')
 
-# Ye shortening API hai
 @app.route('/shorten', methods=['POST', 'OPTIONS'])
 def shorten():
     if request.method == 'OPTIONS':
@@ -53,9 +53,9 @@ def shorten():
         if s_code and l_url:
             supabase.table('links').insert({"short_code": s_code, "original_url": l_url, "clicks": 0}).execute()
             return jsonify({"status": "success"}), 201
-    except:
-        pass
-    return jsonify({"status": "error"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    return jsonify({"status": "failed"}), 400
 
-# Vercel ko batane ke liye ke 'app' Flask hai
+# Vercel requirements
 app = app
