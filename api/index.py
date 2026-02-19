@@ -11,7 +11,7 @@ CORS(app)
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# --- FIVERR GREEN & BLACK PREMIUM INTERFACE ---
+# --- FIVERR GREEN & BLACK PREMIUM INTERFACE (Clean Branding) ---
 HTML_TOOL = """
 <!DOCTYPE html>
 <html lang="en">
@@ -20,43 +20,24 @@ HTML_TOOL = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JarryLink | #1 Free URL Shortener & Branded Link Architect</title>
     
-    <meta name="description" content="JarryLink is the ultimate bitly alternative and free url shortener with custom name. Create branded links, ai video shortener links, and short links for free online. Highest paying link shortener features with custom url shortener capabilities.">
-    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener free online, sentence shortener, paragraph shortener, google url shortener free, bitly alternative, best free url shortener, url shortener with custom name, url shortener chrome extension, link shortener highest paying, free link shortener, shorten url, link management, jarrylabs, jarrylink, vanity urls, marketing links, tinyurl alternative, sniply alternative, rebrandly free, link tracking, unstoppable links, secure links, custom alias, link architect, digital marketing tools, seo tools 2026, free link generator, youtube link shortener, instagram bio link, tiktok url shortener">
+    <meta name="description" content="JarryLink is the ultimate bitly alternative and free url shortener with custom name. Create branded links easily.">
+    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener, bitly alternative, jarrylink, jarrylabs">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --fiverr-green: #1dbf73;
-            --deep-black: #0a0a0a;
-            --soft-black: #121212;
-            --border-color: #2d2d2d;
-        }
-        body { 
-            background-color: var(--deep-black); 
-            font-family: 'Manrope', sans-serif;
-            color: #ffffff;
-        }
+        :root { --fiverr-green: #1dbf73; --deep-black: #0a0a0a; --soft-black: #121212; --border-color: #2d2d2d; }
+        body { background-color: var(--deep-black); font-family: 'Manrope', sans-serif; color: #ffffff; }
         .fiverr-bg { background-color: var(--fiverr-green); }
         .fiverr-text { color: var(--fiverr-green); }
         .nav-link:hover { color: var(--fiverr-green); }
-        .glass-card { 
-            background: var(--soft-black);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
+        .glass-card { background: var(--soft-black); border: 1px solid var(--border-color); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         input:focus { border-color: var(--fiverr-green) !important; }
-        .btn-main {
-            background-color: var(--fiverr-green);
-            color: white;
-            font-weight: 800;
-            transition: all 0.3s ease;
-        }
-        .btn-main:hover {
-            transform: scale(1.02);
-            filter: brightness(1.1);
-        }
+        .btn-main { background-color: var(--fiverr-green); color: white; font-weight: 800; transition: all 0.3s ease; }
+        .btn-main:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .animate-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -70,12 +51,10 @@ HTML_TOOL = """
                 <a href="/" class="nav-link transition-all">Home</a>
                 <a href="#" class="nav-link transition-all">Blog</a>
                 <a href="#" class="nav-link transition-all">Best Tools</a>
-                <a href="#" class="nav-link transition-all">About Us</a>
+                <a href="#" class="nav-link transition-all text-emerald-400">About Us</a>
                 <a href="#" class="nav-link transition-all">Contact</a>
             </div>
-            <div>
-                <button class="border border-white/20 px-6 py-2 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all">GET STARTED</button>
-            </div>
+            <div><button class="border border-white/20 px-6 py-2 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all font-black uppercase">Get Started</button></div>
         </nav>
     </header>
 
@@ -90,31 +69,31 @@ HTML_TOOL = """
                 <div class="bg-[#181818] rounded-[2.2rem] p-8 md:p-12">
                     <div class="space-y-8">
                         <div class="text-left">
-                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Enter Your Long URL</label>
-                            <input type="text" id="longUrl" placeholder="https://youtube.com/watch?v=..." 
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Target URL</label>
+                            <input type="text" id="longUrl" placeholder="https://example.com/very-long-link" 
                                 class="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-fiverr-green outline-none transition-all text-sm">
                         </div>
                         
                         <div class="text-left">
-                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Choose Custom Alias (Optional)</label>
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Custom Alias</label>
                             <div class="flex items-center bg-black/40 border border-white/10 rounded-2xl overflow-hidden">
-                                <span class="pl-6 text-gray-500 font-bold text-sm">jarrylink.site/</span>
-                                <input type="text" id="shortCode" placeholder="my-custom-name" 
-                                    class="w-full bg-transparent p-5 outline-none text-white text-sm">
+                                <span class="pl-6 text-emerald-500 font-black italic text-sm">jarrylink/</span>
+                                <input type="text" id="shortCode" placeholder="alias" 
+                                    class="w-full bg-transparent p-5 outline-none text-white text-sm font-bold">
                             </div>
                         </div>
 
-                        <button onclick="shortenLink()" id="btn" class="btn-main w-full py-5 rounded-2xl uppercase tracking-[0.2em] text-sm shadow-2xl shadow-emerald-500/10">
-                            Generate Short Link
+                        <button onclick="shortenLink()" id="btn" class="btn-main w-full py-5 rounded-2xl uppercase tracking-[0.2em] text-sm shadow-2xl shadow-emerald-500/10 active:scale-95">
+                            Generate Link
                         </button>
                     </div>
 
-                    <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl animate-bounce-in">
-                        <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Your Link is Ready!</p>
-                        <div class="text-3xl font-extrabold mb-6 tracking-tight text-white" id="linkSpan">jarrylink.site/name</div>
-                        <div class="flex gap-3">
-                             <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest">Copy URL</button>
-                             <button onclick="window.open(document.getElementById('linkSpan').innerText.replace('jarrylink.site', window.location.origin), '_blank')" class="bg-white text-black px-6 rounded-xl font-bold text-xs uppercase">Visit</button>
+                    <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl animate-in">
+                        <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Branded Link Ready</p>
+                        <div class="text-4xl font-extrabold mb-8 tracking-tighter text-white italic" id="linkSpan">jarrylink/name</div>
+                        <div class="flex gap-4">
+                             <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg shadow-fiverr-green/20">Copy URL</button>
+                             <button onclick="visitLink()" class="bg-white text-black px-8 rounded-xl font-bold text-xs uppercase hover:bg-fiverr-green hover:text-white transition-all">Visit</button>
                         </div>
                     </div>
                 </div>
@@ -122,67 +101,63 @@ HTML_TOOL = """
         </div>
     </main>
 
-    <footer class="bg-[#050505] border-t border-white/5 py-16 px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+    <footer class="bg-[#050505] border-t border-white/5 py-12 px-6">
+        <div class="max-w-7xl mx-auto text-center md:text-left grid md:grid-cols-4 gap-10">
             <div class="col-span-2">
                 <span class="text-2xl font-black italic text-white">JarryLink.</span>
-                <p class="text-gray-500 mt-4 max-w-xs text-sm leading-relaxed">
-                    The highest paying and most secure link shortener for professional SEO and social media marketing.
-                </p>
+                <p class="text-gray-500 mt-4 text-sm max-w-xs">Premium link management and SEO optimization by JarryLabs.</p>
             </div>
             <div>
-                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-6">Resources</h4>
-                <ul class="space-y-4 text-sm text-gray-400 font-semibold">
-                    <li><a href="#" class="nav-link">Privacy Policy</a></li>
-                    <li><a href="#" class="nav-link">Terms of Service</a></li>
-                    <li><a href="#" class="nav-link">Disclaimer</a></li>
+                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-4">Legal</h4>
+                <ul class="text-sm text-gray-500 space-y-2">
+                    <li>Privacy Policy</li><li>Terms</li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-6">Support</h4>
-                <ul class="space-y-4 text-sm text-gray-400 font-semibold">
-                    <li><a href="#" class="nav-link">About Us</a></li>
-                    <li><a href="#" class="nav-link">Contact Us</a></li>
-                    <li><a href="#" class="nav-link fiverr-text">JarryLabs.com</a></li>
+                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-4">Company</h4>
+                <ul class="text-sm text-gray-500 space-y-2">
+                    <li>About Us</li><li class="fiverr-text">JarryLabs.com</li>
                 </ul>
             </div>
         </div>
     </footer>
 
     <script>
+        let currentAlias = "";
         async function shortenLink() {
             const l_url = document.getElementById('longUrl').value;
             let s_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
-            
-            if(!l_url) return alert("Pehle target URL toh dalo!");
+            if(!l_url) return alert("Pehle URL dalo!");
             
             btn.innerText = "ARCHITECTING..."; btn.disabled = true;
-            
-            const final_code = s_code || Math.random().toString(36).substring(7);
+            currentAlias = s_code || Math.random().toString(36).substring(7);
             
             try {
                 const res = await fetch('/shorten', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ original_url: l_url, short_code: final_code })
+                    body: JSON.stringify({ original_url: l_url, short_code: currentAlias })
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('linkSpan').innerText = "jarrylink.site/" + final_code;
+                    document.getElementById('linkSpan').innerText = "jarrylink/" + currentAlias;
                     btn.innerText = "SUCCESS!";
                 } else { alert("Alias Taken!"); btn.innerText = "TRY AGAIN"; }
-            } catch (e) { alert("Error connecting to server!"); }
+            } catch (e) { alert("Error!"); }
             btn.disabled = false;
         }
 
         function copyLink() {
-            const code = document.getElementById('linkSpan').innerText.split('/')[1];
-            const final = window.location.origin + "/" + code;
+            const final = window.location.origin + "/" + currentAlias;
             navigator.clipboard.writeText(final).then(() => {
                 document.getElementById('copyBtn').innerText = "COPIED!";
                 setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY URL"; }, 2000);
             });
+        }
+        
+        function visitLink() {
+            window.open(window.location.origin + "/" + currentAlias, '_blank');
         }
     </script>
 </body>
@@ -203,7 +178,6 @@ def redirect_logic(short_code):
             target = res.data[0]['original_url']
             if not target.startswith(('http://', 'https://')):
                 target = 'https://' + target
-            # Redirecting to target (Youtube, Google etc) instantly
             return redirect(target, code=301)
     except:
         pass
@@ -211,8 +185,7 @@ def redirect_logic(short_code):
 
 @app.route('/shorten', methods=['POST', 'OPTIONS'])
 def shorten():
-    if request.method == 'OPTIONS':
-        return jsonify({"status": "ok"}), 200
+    if request.method == 'OPTIONS': return jsonify({"status": "ok"}), 200
     try:
         data = request.get_json(silent=True)
         s_code = data.get('short_code', '').strip()
@@ -220,8 +193,7 @@ def shorten():
         if s_code and l_url:
             supabase.table('links').insert({"short_code": s_code, "original_url": l_url, "clicks": 0}).execute()
             return jsonify({"status": "success"}), 201
-    except:
-        pass
+    except: pass
     return jsonify({"status": "error"}), 400
 
 app = app
