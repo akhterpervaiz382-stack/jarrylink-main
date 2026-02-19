@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-# JarryLabs.com aur jarrylink.site dono ke liye CORS setup
-CORS(app, resources={r"/*": {"origins": ["https://jarrylabs.com", "https://jarrylink.site", "http://localhost:3000"]}})
+# CORS ko '*' kar diya hai taake JarryLabs.com se request block na ho
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Database Connection
 supabase_url = os.environ.get("SUPABASE_URL")
@@ -28,7 +28,7 @@ HTML_TOOL = """
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
         .icon-wrapper svg { animation: float 3s ease-in-out infinite; }
         @keyframes float {
             0% { transform: translateY(0px) rotate(-5deg); }
@@ -39,13 +39,12 @@ HTML_TOOL = """
         .fiverr-bg { background-color: #1dbf73; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="text-gray-800">
 
 <div id="jarrylabs-tool-section" class="max-w-4xl mx-auto px-6 py-20">
-    
     <div class="text-center mb-12">
         <div class="icon-wrapper flex justify-center mb-6">
-            <svg width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0px 4px 10px rgba(29, 191, 115, 0.2));">
+            <svg width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#1dbf73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#1dbf73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -88,6 +87,9 @@ HTML_TOOL = """
 
 <script>
     let lastGenerated = "";
+    // Yahan humne backend ka fix URL dena hai
+    const BACKEND_URL = "https://jarrylink.site";
+
     async function generateLink() {
         const url = document.getElementById('longUrl').value;
         let code = document.getElementById('shortCode').value.trim();
@@ -98,13 +100,15 @@ HTML_TOOL = """
         if(!code) code = Math.random().toString(36).substring(7);
 
         try {
-            const res = await fetch('/shorten', {
+            // Humne full path use kiya hai connection fix karne ke liye
+            const res = await fetch(`${BACKEND_URL}/shorten`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ original_url: url, short_code: code })
             });
+            
             if(res.ok) {
-                lastGenerated = window.location.origin + "/" + code;
+                lastGenerated = BACKEND_URL + "/" + code;
                 document.getElementById('shortUrlDisplay').value = lastGenerated;
                 document.getElementById('resultSection').classList.remove('hidden');
                 btn.innerText = "Success!";
@@ -113,7 +117,8 @@ HTML_TOOL = """
                 btn.innerText = "Shorten Link Now";
             }
         } catch (e) {
-            alert("Connection failed! Backend is not responding.");
+            console.error(e);
+            alert("Connection failed! Please make sure Environment Variables are set in Vercel.");
             btn.innerText = "Shorten Link Now";
         }
         btn.disabled = false;
@@ -144,7 +149,8 @@ def redirect_to_url(short_code):
         if res.data:
             url = res.data[0]['original_url']
             return redirect(url if url.startswith('http') else 'https://'+url, code=301)
-    except: pass
+    except Exception as e:
+        print(f"Error: {e}")
     return redirect('/')
 
 @app.route('/shorten', methods=['POST'])
@@ -156,7 +162,7 @@ def shorten():
             "original_url": data['original_url']
         }).execute()
         return jsonify({"status": "success"}), 201
-    except:
-        return jsonify({"status": "error", "message": "Alias exists"}), 400
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 
 app = app
