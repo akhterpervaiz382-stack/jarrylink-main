@@ -11,145 +11,140 @@ CORS(app)
 
 supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# --- MODERN FULL-PAGE TOOL INTERFACE ---
+# --- FIVERR GREEN & BLACK PREMIUM INTERFACE ---
 HTML_TOOL = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JarryLink | Professional URL Shortener & SEO Tool</title>
+    <title>JarryLink | #1 Free URL Shortener & Branded Link Architect</title>
     
-    <meta name="description" content="JarryLink is a professional, free custom URL shortener. Create branded links, track analytics, and optimize your SEO strategy with our advanced link architect.">
-    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener free online, sentence shortener, paragraph shortener, google url shortener free, bitly alternative, best free url shortener, url shortener with custom name, url shortener chrome extension, link shortener highest paying, free link shortener, link management, custom alias shortener, branded links, link cloaking, unstoppable links, jarrylink, url architect">
+    <meta name="description" content="JarryLink is the ultimate bitly alternative and free url shortener with custom name. Create branded links, ai video shortener links, and short links for free online. Highest paying link shortener features with custom url shortener capabilities.">
+    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener free online, sentence shortener, paragraph shortener, google url shortener free, bitly alternative, best free url shortener, url shortener with custom name, url shortener chrome extension, link shortener highest paying, free link shortener, shorten url, link management, jarrylabs, jarrylink, vanity urls, marketing links, tinyurl alternative, sniply alternative, rebrandly free, link tracking, unstoppable links, secure links, custom alias, link architect, digital marketing tools, seo tools 2026, free link generator, youtube link shortener, instagram bio link, tiktok url shortener">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --dark-green: #064e3b;
-            --mid-green: #065f46;
-            --light-green: #10b981;
-            --bg-dark: #020617;
+            --fiverr-green: #1dbf73;
+            --deep-black: #0a0a0a;
+            --soft-black: #121212;
+            --border-color: #2d2d2d;
         }
         body { 
-            background-color: var(--bg-dark); 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            min-height: screen;
+            background-color: var(--deep-black); 
+            font-family: 'Manrope', sans-serif;
+            color: #ffffff;
         }
-        .nav-link:hover { color: var(--light-green); }
-        .footer-link:hover { color: var(--light-green); text-decoration: underline; }
+        .fiverr-bg { background-color: var(--fiverr-green); }
+        .fiverr-text { color: var(--fiverr-green); }
+        .nav-link:hover { color: var(--fiverr-green); }
         .glass-card { 
-            background: rgba(255, 255, 255, 0.02); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            background: var(--soft-black);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .btn-primary {
-            background-color: white;
-            color: black;
+        input:focus { border-color: var(--fiverr-green) !important; }
+        .btn-main {
+            background-color: var(--fiverr-green);
+            color: white;
+            font-weight: 800;
             transition: all 0.3s ease;
         }
-        .btn-primary:hover {
-            background-color: var(--light-green);
-            transform: translateY(-2px);
+        .btn-main:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <header class="bg-[#064e3b] border-b border-emerald-900/50 sticky top-0 z-50">
-        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl font-extrabold tracking-tighter italic text-white">Jarry<span class="text-emerald-400">Link</span></span>
+    <header class="border-b border-white/5 sticky top-0 z-50 bg-black/80 backdrop-blur-md">
+        <nav class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center">
+                <span class="text-3xl font-extrabold tracking-tighter text-white">Jarry<span class="fiverr-text">Link.</span></span>
             </div>
-            <div class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-widest text-emerald-100">
+            <div class="hidden md:flex space-x-10 text-[11px] font-bold uppercase tracking-[0.2em]">
                 <a href="/" class="nav-link transition-all">Home</a>
-                <a href="#" class="nav-link transition-all text-emerald-400">Blog</a>
+                <a href="#" class="nav-link transition-all">Blog</a>
                 <a href="#" class="nav-link transition-all">Best Tools</a>
                 <a href="#" class="nav-link transition-all">About Us</a>
                 <a href="#" class="nav-link transition-all">Contact</a>
             </div>
-            <div class="md:hidden text-emerald-400 text-2xl">☰</div>
+            <div>
+                <button class="border border-white/20 px-6 py-2 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all">GET STARTED</button>
+            </div>
         </nav>
     </header>
 
-    <main class="flex-grow flex items-center justify-center py-20 px-4 relative overflow-hidden">
-        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-900/20 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-900/10 rounded-full blur-[120px]"></div>
-
-        <div class="max-w-4xl w-full text-center z-10">
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-                Architect Your <span class="text-emerald-400 italic">Unstoppable</span> Link
+    <main class="flex-grow flex items-center justify-center py-20 px-4">
+        <div class="max-w-5xl w-full text-center">
+            <span class="fiverr-text font-bold text-xs uppercase tracking-[0.5em] mb-4 block">Professional Grade URL Architect</span>
+            <h2 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter leading-[0.9]">
+                Shorten. Brand. <br><span class="fiverr-text italic">Optimize.</span>
             </h2>
-            <p class="text-gray-400 max-w-2xl mx-auto mb-12 text-lg">
-                The most advanced branded URL shortener for creators and marketers. Fast, secure, and permanent.
-            </p>
-
-            <div class="glass-card p-2 rounded-[2.5rem] shadow-2xl max-w-3xl mx-auto">
-                <div class="bg-[#050505] rounded-[2.2rem] p-6 md:p-10 space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6 text-left">
-                        <div class="space-y-2">
-                            <label class="text-[10px] uppercase tracking-[0.2em] font-black text-emerald-500 ml-2">Destination URL</label>
-                            <input type="text" id="longUrl" placeholder="Paste long link here..." 
-                                class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:border-emerald-500 outline-none transition-all">
+            
+            <div class="glass-card p-4 rounded-[2.5rem] max-w-3xl mx-auto mt-12">
+                <div class="bg-[#181818] rounded-[2.2rem] p-8 md:p-12">
+                    <div class="space-y-8">
+                        <div class="text-left">
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Enter Your Long URL</label>
+                            <input type="text" id="longUrl" placeholder="https://youtube.com/watch?v=..." 
+                                class="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-fiverr-green outline-none transition-all text-sm">
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] uppercase tracking-[0.2em] font-black text-emerald-500 ml-2">Custom Alias</label>
-                            <div class="flex items-center bg-white/5 border border-white/10 rounded-2xl overflow-hidden focus-within:border-emerald-500">
-                                <span class="pl-4 text-gray-500 font-bold italic text-sm">jarrylink/</span>
-                                <input type="text" id="shortCode" placeholder="brand-name" 
-                                    class="w-full bg-transparent p-4 outline-none text-white">
+                        
+                        <div class="text-left">
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-3 block ml-2">Choose Custom Alias (Optional)</label>
+                            <div class="flex items-center bg-black/40 border border-white/10 rounded-2xl overflow-hidden">
+                                <span class="pl-6 text-gray-500 font-bold text-sm">jarrylink.site/</span>
+                                <input type="text" id="shortCode" placeholder="my-custom-name" 
+                                    class="w-full bg-transparent p-5 outline-none text-white text-sm">
                             </div>
                         </div>
-                    </div>
-                    <button onclick="shortenLink()" id="btn" class="btn-primary w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg shadow-emerald-900/20">
-                        Create Branded Link
-                    </button>
 
-                    <div id="result" class="hidden mt-8 p-6 bg-emerald-900/20 border border-emerald-500/30 rounded-3xl animate-pulse">
-                        <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-2">Architected Successfully!</p>
-                        <div class="text-2xl font-bold mb-4" id="linkSpan">jarrylink/name</div>
-                        <button onclick="copyLink()" id="copyBtn" class="bg-emerald-500 text-black px-8 py-3 rounded-xl font-bold text-xs uppercase hover:bg-white transition-all">
-                            Copy Link
+                        <button onclick="shortenLink()" id="btn" class="btn-main w-full py-5 rounded-2xl uppercase tracking-[0.2em] text-sm shadow-2xl shadow-emerald-500/10">
+                            Generate Short Link
                         </button>
+                    </div>
+
+                    <div id="result" class="hidden mt-10 p-8 border border-fiverr-green/30 bg-fiverr-green/5 rounded-3xl animate-bounce-in">
+                        <p class="text-[10px] font-bold fiverr-text uppercase tracking-widest mb-3">Your Link is Ready!</p>
+                        <div class="text-3xl font-extrabold mb-6 tracking-tight text-white" id="linkSpan">jarrylink.site/name</div>
+                        <div class="flex gap-3">
+                             <button onclick="copyLink()" id="copyBtn" class="flex-grow fiverr-bg text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest">Copy URL</button>
+                             <button onclick="window.open(document.getElementById('linkSpan').innerText.replace('jarrylink.site', window.location.origin), '_blank')" class="bg-white text-black px-6 rounded-xl font-bold text-xs uppercase">Visit</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-[#064e3b] text-emerald-100 py-12 px-6 border-t border-emerald-800">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-2">
-                    <span class="text-2xl font-black italic mb-4 block text-white">JarryLink</span>
-                    <p class="text-emerald-200/60 max-w-sm text-sm leading-relaxed">
-                        Leading the industry in link management and SEO optimization. JarryLink provides professional tools for digital growth.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-bold uppercase tracking-widest text-xs text-white mb-6">Legal</h4>
-                    <ul class="space-y-4 text-sm text-emerald-200/80 font-medium">
-                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                        <li><a href="#" class="footer-link">Terms of Service</a></li>
-                        <li><a href="#" class="footer-link">Disclaimer</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold uppercase tracking-widest text-xs text-white mb-6">Company</h4>
-                    <ul class="space-y-4 text-sm text-emerald-200/80 font-medium">
-                        <li><a href="#" class="footer-link">About Us</a></li>
-                        <li><a href="#" class="footer-link">Contact</a></li>
-                        <li><a href="#" class="footer-link">JarryLabs</a></li>
-                    </ul>
-                </div>
+    <footer class="bg-[#050505] border-t border-white/5 py-16 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <span class="text-2xl font-black italic text-white">JarryLink.</span>
+                <p class="text-gray-500 mt-4 max-w-xs text-sm leading-relaxed">
+                    The highest paying and most secure link shortener for professional SEO and social media marketing.
+                </p>
             </div>
-            <div class="pt-8 border-t border-emerald-800/50 text-center text-xs text-emerald-400/50 font-bold uppercase tracking-[0.3em]">
-                &copy; 2026 JarryLabs Architect Engine. All Rights Reserved.
+            <div>
+                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-6">Resources</h4>
+                <ul class="space-y-4 text-sm text-gray-400 font-semibold">
+                    <li><a href="#" class="nav-link">Privacy Policy</a></li>
+                    <li><a href="#" class="nav-link">Terms of Service</a></li>
+                    <li><a href="#" class="nav-link">Disclaimer</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-6">Support</h4>
+                <ul class="space-y-4 text-sm text-gray-400 font-semibold">
+                    <li><a href="#" class="nav-link">About Us</a></li>
+                    <li><a href="#" class="nav-link">Contact Us</a></li>
+                    <li><a href="#" class="nav-link fiverr-text">JarryLabs.com</a></li>
+                </ul>
             </div>
         </div>
     </footer>
@@ -159,30 +154,34 @@ HTML_TOOL = """
             const l_url = document.getElementById('longUrl').value;
             let s_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
-            if(!l_url) return alert("Pehle URL dalo bhai!");
             
-            btn.innerText = "PROCESSING..."; btn.disabled = true;
+            if(!l_url) return alert("Pehle target URL toh dalo!");
+            
+            btn.innerText = "ARCHITECTING..."; btn.disabled = true;
+            
+            const final_code = s_code || Math.random().toString(36).substring(7);
+            
             try {
                 const res = await fetch('/shorten', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ original_url: l_url, short_code: s_code || Math.random().toString(36).substring(7) })
+                    body: JSON.stringify({ original_url: l_url, short_code: final_code })
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('linkSpan').innerText = `jarrylink/${s_code || 'link'}`;
-                    btn.innerText = "CREATE ANOTHER";
-                } else { alert("Alias Taken!"); }
-            } catch (e) { alert("Error!"); }
+                    document.getElementById('linkSpan').innerText = "jarrylink.site/" + final_code;
+                    btn.innerText = "SUCCESS!";
+                } else { alert("Alias Taken!"); btn.innerText = "TRY AGAIN"; }
+            } catch (e) { alert("Error connecting to server!"); }
             btn.disabled = false;
         }
 
         function copyLink() {
             const code = document.getElementById('linkSpan').innerText.split('/')[1];
-            const final = "https://jarrylink.site/" + code;
+            const final = window.location.origin + "/" + code;
             navigator.clipboard.writeText(final).then(() => {
                 document.getElementById('copyBtn').innerText = "COPIED!";
-                setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY LINK"; }, 2000);
+                setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY URL"; }, 2000);
             });
         }
     </script>
@@ -204,6 +203,7 @@ def redirect_logic(short_code):
             target = res.data[0]['original_url']
             if not target.startswith(('http://', 'https://')):
                 target = 'https://' + target
+            # Redirecting to target (Youtube, Google etc) instantly
             return redirect(target, code=301)
     except:
         pass
