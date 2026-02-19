@@ -7,26 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        #displayLink { cursor: pointer; user-select: none; -webkit-user-select: none; }
-        .mask-text { pointer-events: none; }
+        #displayLink { cursor: pointer; user-select: none; }
     </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4 font-sans">
-
-    <div class="absolute top-5 right-5 flex items-center gap-2 bg-black/40 p-3 rounded-full border border-white/10">
-        <div id="dot" class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
-        <span id="stext" class="text-[10px] font-mono uppercase tracking-widest text-gray-300">Engine Online</span>
-    </div>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
 
     <div class="max-w-md w-full glass p-8 rounded-[2.5rem] border border-white/20 shadow-2xl text-center">
         <h1 class="text-4xl font-black mb-2 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic">JarryLink</h1>
-        <p class="text-gray-400 text-sm mb-8 uppercase tracking-tighter">Premium Custom Shortener</p>
+        <p class="text-gray-400 text-sm mb-8 uppercase">Premium Custom Shortener</p>
 
         <div class="space-y-4 text-left">
             <div>
                 <label class="text-xs text-gray-500 ml-2 uppercase font-bold">Long URL</label>
-                <input type="text" id="longUrl" placeholder="https://youtube.com/..." 
-                       class="w-full p-4 rounded-2xl bg-black/30 border border-white/10 focus:border-emerald-500 outline-none transition-all text-white">
+                <input type="text" id="longUrl" placeholder="https://youtube.com/..." class="w-full p-4 rounded-2xl bg-black/30 border border-white/10 focus:border-emerald-500 outline-none text-white">
             </div>
 
             <div>
@@ -37,20 +30,16 @@
                 </div>
             </div>
 
-            <button onclick="shortenLink()" id="btn" class="w-full py-5 bg-emerald-600 hover:bg-emerald-500 rounded-2xl font-black text-lg transition-all shadow-xl shadow-emerald-900/20 active:scale-95">
+            <button onclick="shortenLink()" id="btn" class="w-full py-5 bg-emerald-600 hover:bg-emerald-500 rounded-2xl font-black text-lg transition-all active:scale-95">
                 GENERATE LINK
             </button>
         </div>
 
         <div id="result" class="mt-8 hidden p-6 bg-emerald-400/10 border border-emerald-400/30 rounded-[2rem]">
             <p class="text-[10px] text-emerald-400 uppercase font-bold mb-2">Live Branded Link</p>
-            
-            <div id="displayLink" 
-                 onclick="copyLink()" 
-                 class="text-3xl font-bold text-white hover:text-emerald-400 transition-all break-all italic">
-                <span class="mask-text" id="linkSpan">jarrylink/Name</span>
+            <div id="displayLink" onclick="copyLink()" class="text-3xl font-bold text-white hover:text-emerald-400 transition-all break-all italic">
+                <span id="linkSpan">jarrylink/Name</span>
             </div>
-
             <button onclick="copyLink()" id="copyBtn" class="mt-4 text-[10px] bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-emerald-400 transition-all">
                 COPY CLEAN LINK
             </button>
@@ -63,14 +52,14 @@
             let short_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
 
-            if(!original_url) return alert("URL zaroori hai!");
-            if(!short_code) short_code = Math.random().toString(36).substring(7);
-
+            if(!original_url) return alert("Bhai URL toh dalo!");
+            
             btn.innerText = "ARCHITECTING...";
             btn.disabled = true;
 
             try {
-                const res = await fetch('/shorten', {
+                // IMPORTANT: Yahan absolute URL 'https://jarrylink.site/shorten' use karein
+                const res = await fetch('https://jarrylink.site/shorten', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ original_url, short_code })
@@ -78,15 +67,14 @@
 
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    // Yahan hum sirf jarrylink/ dikha rahe hain
                     document.getElementById('linkSpan').innerText = `jarrylink/${short_code}`;
                     btn.innerText = "GENERATE LINK";
                 } else {
-                    alert("Try another name!");
+                    alert("Ye name pehle se hai, kuch naya try karein!");
                     btn.innerText = "TRY AGAIN";
                 }
             } catch (e) {
-                alert("Connection Error!");
+                alert("Connection Error! Vercel check karein.");
             }
             btn.disabled = false;
         }
@@ -95,17 +83,17 @@
             const display = document.getElementById('linkSpan').innerText;
             const code = display.split('/')[1];
             
-            // Paste karne par ye asli URL ban jayega, lekin user ko sirf jarrylink/code dikhayega
+            // Hum clipboard mein domain ke saath bhejenge taake link chale
+            // Lekin backend isay 301 redirect karega toh domain ghayab ho jayega
             const finalLink = "https://jarrylink.site/" + code;
             
             navigator.clipboard.writeText(finalLink).then(() => {
                 const copyBtn = document.getElementById('copyBtn');
                 copyBtn.innerText = "COPIED TO CLIPBOARD!";
-                copyBtn.classList.replace('bg-white', 'bg-emerald-400');
-                
+                copyBtn.style.background = "#10b981";
                 setTimeout(() => {
                     copyBtn.innerText = "COPY CLEAN LINK";
-                    copyBtn.classList.replace('bg-emerald-400', 'bg-white');
+                    copyBtn.style.background = "white";
                 }, 2000);
             });
         }
