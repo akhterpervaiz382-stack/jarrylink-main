@@ -46,7 +46,7 @@ def redirect_logic(short_code):
     except Exception as e:
         print(f"Error: {e}")
         
-    return redirect('https://jarrylink.site')
+    return redirect('https://jarrylink)
 
 # --- HOME & SHORTEN LOGIC ---
 @app.route('/')
