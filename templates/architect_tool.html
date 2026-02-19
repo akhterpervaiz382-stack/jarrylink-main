@@ -6,42 +6,41 @@
     <title>JarryLink | Architect</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        #displayLink { cursor: pointer; user-select: none; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); }
     </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+<body class="bg-[#050505] text-white min-h-screen flex items-center justify-center p-6">
 
-    <div class="max-w-md w-full glass p-8 rounded-[2.5rem] border border-white/20 shadow-2xl text-center">
-        <h1 class="text-4xl font-black mb-2 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic">JarryLink</h1>
-        <p class="text-gray-400 text-sm mb-8 uppercase">Premium Custom Shortener</p>
+    <div class="max-w-md w-full glass p-10 rounded-[3rem] border border-white/10 shadow-2xl text-center">
+        <h1 class="text-4xl font-black mb-1 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic tracking-tighter">JarryLink</h1>
+        <p class="text-gray-500 text-[10px] uppercase tracking-[0.3em] mb-10">Premium Architect Engine</p>
 
-        <div class="space-y-4 text-left">
+        <div class="space-y-5 text-left">
             <div>
-                <label class="text-xs text-gray-500 ml-2 uppercase font-bold">Long URL</label>
-                <input type="text" id="longUrl" placeholder="https://youtube.com/..." class="w-full p-4 rounded-2xl bg-black/30 border border-white/10 focus:border-emerald-500 outline-none text-white">
+                <label class="text-[10px] text-gray-400 ml-4 uppercase font-bold tracking-widest">Target Destination</label>
+                <input type="text" id="longUrl" placeholder="https://..." class="w-full p-5 mt-1 rounded-2xl bg-white/5 border border-white/5 focus:border-emerald-500/50 outline-none transition-all">
             </div>
 
             <div>
-                <label class="text-xs text-gray-500 ml-2 uppercase font-bold">Branded Name</label>
-                <div class="flex items-center bg-black/30 rounded-2xl border border-white/10 focus-within:border-emerald-500 overflow-hidden">
-                    <span class="pl-4 text-emerald-400 font-bold italic">jarrylink/</span>
-                    <input type="text" id="shortCode" placeholder="MyLink" class="w-full p-4 bg-transparent outline-none text-white">
+                <label class="text-[10px] text-gray-400 ml-4 uppercase font-bold tracking-widest">Custom Alias</label>
+                <div class="flex items-center bg-white/5 rounded-2xl border border-white/5 focus-within:border-emerald-500/50 overflow-hidden mt-1">
+                    <span class="pl-5 text-emerald-400 font-bold italic">jarrylink/</span>
+                    <input type="text" id="shortCode" placeholder="my-brand" class="w-full p-5 bg-transparent outline-none">
                 </div>
             </div>
 
-            <button onclick="shortenLink()" id="btn" class="w-full py-5 bg-emerald-600 hover:bg-emerald-500 rounded-2xl font-black text-lg transition-all active:scale-95">
-                GENERATE LINK
+            <button onclick="shortenLink()" id="btn" class="w-full py-5 bg-white text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-emerald-400 transition-all active:scale-95 shadow-lg shadow-emerald-500/10">
+                Generate Branded Link
             </button>
         </div>
 
-        <div id="result" class="mt-8 hidden p-6 bg-emerald-400/10 border border-emerald-400/30 rounded-[2rem]">
-            <p class="text-[10px] text-emerald-400 uppercase font-bold mb-2">Live Branded Link</p>
-            <div id="displayLink" onclick="copyLink()" class="text-3xl font-bold text-white hover:text-emerald-400 transition-all break-all italic">
-                <span id="linkSpan">jarrylink/Name</span>
+        <div id="result" class="mt-10 hidden p-8 bg-emerald-500/5 border border-emerald-500/20 rounded-[2.5rem] animate-pulse">
+            <p class="text-[9px] text-emerald-400 uppercase font-black mb-3 tracking-[0.2em]">Branded Link Ready</p>
+            <div id="displayLink" class="text-2xl font-bold italic text-white mb-6">
+                <span id="linkSpan">jarrylink/name</span>
             </div>
-            <button onclick="copyLink()" id="copyBtn" class="mt-4 text-[10px] bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-emerald-400 transition-all">
-                COPY CLEAN LINK
+            <button onclick="copyLink()" id="copyBtn" class="w-full py-3 bg-emerald-500 text-black rounded-xl font-bold text-[10px] uppercase tracking-tighter hover:bg-white transition-all">
+                Copy Branded URL
             </button>
         </div>
     </div>
@@ -52,13 +51,12 @@
             let short_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
 
-            if(!original_url) return alert("Bhai URL toh dalo!");
+            if(!original_url) return alert("URL Missing!");
             
             btn.innerText = "ARCHITECTING...";
             btn.disabled = true;
 
             try {
-                // IMPORTANT: Yahan absolute URL 'https://jarrylink.site/shorten' use karein
                 const res = await fetch('https://jarrylink.site/shorten', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -67,14 +65,15 @@
 
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
+                    // SIRF BRANDING SHOW KARNI HAI
                     document.getElementById('linkSpan').innerText = `jarrylink/${short_code}`;
                     btn.innerText = "GENERATE LINK";
                 } else {
-                    alert("Ye name pehle se hai, kuch naya try karein!");
-                    btn.innerText = "TRY AGAIN";
+                    alert("Alias taken! Try another.");
+                    btn.innerText = "GENERATE LINK";
                 }
             } catch (e) {
-                alert("Connection Error! Vercel check karein.");
+                alert("Engine Offline!");
             }
             btn.disabled = false;
         }
@@ -83,18 +82,14 @@
             const display = document.getElementById('linkSpan').innerText;
             const code = display.split('/')[1];
             
-            // Hum clipboard mein domain ke saath bhejenge taake link chale
-            // Lekin backend isay 301 redirect karega toh domain ghayab ho jayega
+            // Clipboard mein .site bhej rahe hain taake link chale
+            // Lekin backend itna fast hai ke load hote hi ghayab ho jayega
             const finalLink = "https://jarrylink.site/" + code;
             
             navigator.clipboard.writeText(finalLink).then(() => {
                 const copyBtn = document.getElementById('copyBtn');
                 copyBtn.innerText = "COPIED TO CLIPBOARD!";
-                copyBtn.style.background = "#10b981";
-                setTimeout(() => {
-                    copyBtn.innerText = "COPY CLEAN LINK";
-                    copyBtn.style.background = "white";
-                }, 2000);
+                setTimeout(() => { copyBtn.innerText = "COPY BRANDED URL"; }, 2000);
             });
         }
     </script>
