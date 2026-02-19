@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, redirect, make_response
+from flask import Flask, request, jsonify, redirect
 from flask_cors import CORS
 from supabase import create_client
 from dotenv import load_dotenv
@@ -8,11 +8,14 @@ load_dotenv()
 
 app = Flask(__name__)
 # JarryLabs.com se requests allow karne ke liye CORS setup
-CORS(app, resources={r"/*": {"origins": ["https://jarrylabs.com", "http://localhost:3000"]}})
+CORS(app, resources={r"/*": {"origins": ["https://jarrylabs.com", "http://localhost:3000", "https://jarrylink.site"]}})
 
-supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
+# Database Connection
+supabase_url = os.environ.get("SUPABASE_URL")
+supabase_key = os.environ.get("SUPABASE_KEY")
+supabase = create_client(supabase_url, supabase_key)
 
-# --- JARRYLABS PREMIUM INTERFACE (Updated with Real Links) ---
+# --- JARRYLABS PREMIUM INTERFACE ---
 HTML_TOOL = """
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +24,7 @@ HTML_TOOL = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JarryLabs | Make Your Link Cutest & Branded</title>
     
-    <meta name="description" content="JarryLabs provides the best free custom url shortener. Create branded links, ai video shortener links, and optimize your SEO strategy with our advanced link architect.">
-    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener free online, sentence shortener, paragraph shortener, google url shortener free, bitly alternative, best free url shortener, url shortener with custom name, jarrylabs, link management">
-    
+    <meta name="description" content="JarryLabs provides the best free custom url shortener. Create branded links and optimize your SEO strategy.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
     
@@ -108,67 +109,87 @@ HTML_TOOL = """
         </div>
     </main>
 
-    <footer class="bg-[#050505] border-t border-white/5 py-12 px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
+    <footer class="bg-[#050505] border-t border-white/5 py-12 px-6 mt-10">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 text-left">
             <div class="col-span-2">
                 <span class="text-2xl font-black italic text-white">JarryLabs.</span>
-                <p class="text-gray-500 mt-4 text-sm max-w-xs">Premium SEO tools and URL management. Powered by JarryLabs Architecture.</p>
+                <p class="text-gray-500 mt-4 text-sm max-w-xs">Premium SEO tools and URL management.</p>
             </div>
             <div>
-                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-4">Legal</h4>
+                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-4 text-left">Legal</h4>
                 <ul class="text-sm text-gray-500 space-y-2">
                     <li><a href="https://www.jarrylabs.com/p/privacy-policy_18.html" class="hover:text-white transition">Privacy Policy</a></li>
                     <li><a href="https://www.jarrylabs.com/p/terms.html" class="hover:text-white transition">Terms of Service</a></li>
                     <li><a href="https://www.jarrylabs.com/p/disclaimer_22.html" class="hover:text-white transition">Disclaimer</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 class="text-white font-bold text-xs uppercase tracking-widest mb-4">Quick Links</h4>
-                <ul class="text-sm text-gray-500 space-y-2">
-                    <li><a href="https://www.jarrylabs.com/p/about-us.html" class="hover:text-white transition">About Us</a></li>
-                    <li><a href="https://www.jarrylabs.com/p/contact-us_18.html" class="hover:text-white transition">Contact Us</a></li>
-                    <li class="fiverr-text font-bold">Fiverr Professional</li>
-                </ul>
-            </div>
         </div>
     </footer>
-    
+
     <script>
-        let currentAlias = "";
+        let lastAlias = "";
         async function shortenLink() {
             const l_url = document.getElementById('longUrl').value;
             let s_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
-            if(!l_url) return alert("Pehle URL dalo bhai!");
+            if(!l_url) return alert("URL dalo!");
             
-            btn.innerText = "BEAUTIFYING..."; btn.disabled = true;
-            currentAlias = s_code || Math.random().toString(36).substring(7);
+            btn.innerText = "SAVING..."; btn.disabled = true;
+            lastAlias = s_code || Math.random().toString(36).substring(7);
             
             try {
                 const res = await fetch('/shorten', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ original_url: l_url, short_code: currentAlias })
+                    body: JSON.stringify({ original_url: l_url, short_code: lastAlias })
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('linkSpan').innerText = "jarrylabs/" + currentAlias;
+                    document.getElementById('linkSpan').innerText = "jarrylabs/" + lastAlias;
                     btn.innerText = "SUCCESS!";
-                } else { alert("Alias Taken!"); btn.innerText = "TRY AGAIN"; }
-            } catch (e) { alert("Error!"); }
+                } else { alert("Alias exists!"); btn.innerText = "TRY AGAIN"; }
+            } catch (e) { alert("Server error!"); }
             btn.disabled = false;
         }
-
         function copyLink() {
-            const final = window.location.origin + "/" + currentAlias;
-            navigator.clipboard.writeText(final).then(() => {
-                document.getElementById('copyBtn').innerText = "COPIED!";
-                setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY NOW"; }, 2000);
-            });
+            const final = window.location.origin + "/" + lastAlias;
+            navigator.clipboard.writeText(final);
+            document.getElementById('copyBtn').innerText = "COPIED!";
         }
-        function visitLink() { window.open(window.location.origin + "/" + currentAlias, '_blank'); }
+        function visitLink() { window.open(window.location.origin + "/" + lastAlias, '_blank'); }
     </script>
 </body>
 </html>
 """
-# ... Baqi Flask Logic wahi hai ...
+
+# --- BACKEND ROUTES (Don't Remove These!) ---
+
+@app.route('/')
+def home():
+    return HTML_TOOL
+
+@app.route('/<short_code>')
+def redirect_to_url(short_code):
+    if short_code in ['shorten', 'favicon.ico']: return "", 204
+    try:
+        res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
+        if res.data:
+            url = res.data[0]['original_url']
+            return redirect(url if url.startswith('http') else 'https://'+url, code=301)
+    except: pass
+    return redirect('/')
+
+@app.route('/shorten', methods=['POST'])
+def shorten():
+    data = request.json
+    try:
+        supabase.table('links').insert({
+            "short_code": data['short_code'], 
+            "original_url": data['original_url']
+        }).execute()
+        return jsonify({"status": "success"}), 201
+    except:
+        return jsonify({"status": "error"}), 400
+
+# For Vercel
+app = app
