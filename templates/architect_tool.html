@@ -3,42 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JarryLink | Architect</title>
+    <title>JarryLink | Premium Architect</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); }
+        body { background: #050505; font-family: sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
-<body class="bg-[#050505] text-white min-h-screen flex items-center justify-center p-6">
-
-    <div class="max-w-md w-full glass p-10 rounded-[3rem] border border-white/10 shadow-2xl text-center">
+<body class="text-white min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-md w-full glass p-10 rounded-[2.5rem] shadow-2xl text-center">
         <h1 class="text-4xl font-black mb-1 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic tracking-tighter">JarryLink</h1>
         <p class="text-gray-500 text-[10px] uppercase tracking-[0.3em] mb-10">Premium Architect Engine</p>
 
-        <div class="space-y-5 text-left">
+        <div class="space-y-6 text-left">
             <div>
-                <label class="text-[10px] text-gray-400 ml-4 uppercase font-bold tracking-widest">Target Destination</label>
-                <input type="text" id="longUrl" placeholder="https://..." class="w-full p-5 mt-1 rounded-2xl bg-white/5 border border-white/5 focus:border-emerald-500/50 outline-none transition-all">
+                <label class="text-[10px] text-gray-400 ml-4 uppercase font-bold tracking-widest">Target URL</label>
+                <input type="text" id="longUrl" placeholder="https://..." class="w-full p-4 mt-1 rounded-2xl bg-white/5 border border-white/5 focus:border-emerald-500/50 outline-none transition-all">
             </div>
 
             <div>
                 <label class="text-[10px] text-gray-400 ml-4 uppercase font-bold tracking-widest">Custom Alias</label>
                 <div class="flex items-center bg-white/5 rounded-2xl border border-white/5 focus-within:border-emerald-500/50 overflow-hidden mt-1">
                     <span class="pl-5 text-emerald-400 font-bold italic">jarrylink/</span>
-                    <input type="text" id="shortCode" placeholder="my-brand" class="w-full p-5 bg-transparent outline-none">
+                    <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none">
                 </div>
             </div>
 
-            <button onclick="shortenLink()" id="btn" class="w-full py-5 bg-white text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-emerald-400 transition-all active:scale-95 shadow-lg shadow-emerald-500/10">
+            <button onclick="shortenLink()" id="btn" class="w-full py-4 bg-white text-black rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-400 transition-all active:scale-95">
                 Generate Branded Link
             </button>
         </div>
 
-        <div id="result" class="mt-10 hidden p-8 bg-emerald-500/5 border border-emerald-500/20 rounded-[2.5rem] animate-pulse">
-            <p class="text-[9px] text-emerald-400 uppercase font-black mb-3 tracking-[0.2em]">Branded Link Ready</p>
-            <div id="displayLink" class="text-2xl font-bold italic text-white mb-6">
-                <span id="linkSpan">jarrylink/name</span>
-            </div>
+        <div id="result" class="mt-8 hidden p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-[2rem]">
+            <p class="text-[9px] text-emerald-400 uppercase font-black mb-2 tracking-[0.2em]">Ready to Share</p>
+            <div class="text-2xl font-bold italic text-white mb-4"><span id="linkSpan">jarrylink/name</span></div>
             <button onclick="copyLink()" id="copyBtn" class="w-full py-3 bg-emerald-500 text-black rounded-xl font-bold text-[10px] uppercase tracking-tighter hover:bg-white transition-all">
                 Copy Branded URL
             </button>
@@ -50,46 +48,32 @@
             const original_url = document.getElementById('longUrl').value;
             let short_code = document.getElementById('shortCode').value.trim();
             const btn = document.getElementById('btn');
-
-            if(!original_url) return alert("URL Missing!");
+            if(!original_url) return alert("URL dalo!");
             
             btn.innerText = "ARCHITECTING...";
             btn.disabled = true;
 
             try {
-                const res = await fetch('https://jarrylink.site/shorten', {
+                const res = await fetch('/shorten', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ original_url, short_code })
+                    body: JSON.stringify({ original_url, short_code: short_code || Math.random().toString(36).substring(7) })
                 });
-
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    // SIRF BRANDING SHOW KARNI HAI
                     document.getElementById('linkSpan').innerText = `jarrylink/${short_code}`;
                     btn.innerText = "GENERATE LINK";
-                } else {
-                    alert("Alias taken! Try another.");
-                    btn.innerText = "GENERATE LINK";
-                }
-            } catch (e) {
-                alert("Engine Offline!");
-            }
+                } else { alert("Alias taken!"); btn.innerText = "TRY AGAIN"; }
+            } catch (e) { alert("Error!"); }
             btn.disabled = false;
         }
 
         function copyLink() {
-            const display = document.getElementById('linkSpan').innerText;
-            const code = display.split('/')[1];
-            
-            // Clipboard mein .site bhej rahe hain taake link chale
-            // Lekin backend itna fast hai ke load hote hi ghayab ho jayega
-            const finalLink = "https://jarrylink.site/" + code;
-            
+            const code = document.getElementById('linkSpan').innerText.split('/')[1];
+            const finalLink = window.location.origin + "/" + code;
             navigator.clipboard.writeText(finalLink).then(() => {
-                const copyBtn = document.getElementById('copyBtn');
-                copyBtn.innerText = "COPIED TO CLIPBOARD!";
-                setTimeout(() => { copyBtn.innerText = "COPY BRANDED URL"; }, 2000);
+                document.getElementById('copyBtn').innerText = "COPIED!";
+                setTimeout(() => { document.getElementById('copyBtn').innerText = "COPY BRANDED URL"; }, 2000);
             });
         }
     </script>
