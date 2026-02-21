@@ -7,19 +7,6 @@
       "use": "@vercel/python"
     }
   ],
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.jarrylabs.com"
-        }
-      ],
-      "destination": "https://jarrylabs.com/$1",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",
