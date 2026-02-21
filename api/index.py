@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, redirect
+from flask import Flask, request, jsonify, redirect, render_template_string
 from flask_cors import CORS
 from supabase import create_client
 from dotenv import load_dotenv
@@ -15,33 +15,64 @@ supabase_key = os.environ.get("SUPABASE_KEY")
 supabase = create_client(supabase_url, supabase_key)
 
 # --- JARRYLABS SEO OPTIMIZED INTERFACE ---
-# (Aapka HTML_TOOL wala sara part waisa hi rahega)
 HTML_TOOL = """
 <!DOCTYPE html>
 <html lang="en">
-... (Aapka pura HTML yahan aayega) ...
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JarryLabs | Best Free URL Shortener & Custom Link Generator</title>
+    <meta name="description" content="Use JarryLabs for free online link shortening with custom names. The best Bitly alternative for AI video and paragraph shorteners.">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: #1e293b; padding: 2.5rem; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; width: 100%; max-width: 450px; border: 1px solid #334155; }
+        h1 { color: #38bdf8; font-size: 2.5rem; margin-bottom: 10px; }
+        p { color: #94a3b8; margin-bottom: 2rem; }
+        input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 1rem; box-sizing: border-box; font-size: 1rem; }
+        button { width: 100%; padding: 15px; border-radius: 10px; border: none; background: linear-gradient(90deg, #38bdf8, #818cf8); color: white; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
+        button:hover { transform: scale(1.02); opacity: 0.9; }
+        .footer-text { margin-top: 2rem; font-size: 0.8rem; color: #475569; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JarryLabs 🚀</h1>
+        <p>Shorten, Track, and Grow your Traffic</p>
+        <input type="text" id="longUrl" placeholder="Paste your long URL here..." required>
+        <input type="text" id="customCode" placeholder="Custom name (optional)">
+        <button onclick="shortenLink()">Shorten URL</button>
+        <div id="result" style="margin-top: 20px; font-weight: bold; color: #38bdf8;"></div>
+        <p class="footer-text">The best free custom url shortener for 2026</p>
+    </div>
+    <script>
+        async function shortenLink() {
+            const url = document.getElementById('longUrl').value;
+            const code = document.getElementById('customCode').value || Math.random().toString(36).substring(7);
+            const res = await fetch('/shorten', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({original_url: url, short_code: code})
+            });
+            if(res.ok) {
+                document.getElementById('result').innerHTML = `Your link: jarrylabs.com/${code}`;
+            } else {
+                document.getElementById('result').innerHTML = "Error creating link.";
+            }
+        }
+    </script>
+</body>
 </html>
 """
 
-# --- BACKEND ROUTES ---
-
 @app.route('/')
 def home():
-    return HTML_TOOL
+    return render_template_string(HTML_TOOL)
 
-# YEH HAI WOH "CATCH-ALL" ROUTE JO LINKS HANDLE KARTA HAI
 @app.route('/<path:path>')
 def handle_all_routes(path):
-    # --- 🛡️ SMART GUARD FOR SEO PAGES & BLOGGER LINKS ---
-    # Agar link mein .html hai, ya wo /p/ ya /202/ se shuru ho raha hai
     if ".html" in path or path.startswith("p/") or path.startswith("20") or "/" in path:
-        # In links ko database mein mat dhoondo. 
-        # Kyunke ye pages Google par live hain, hum inhein wapas unke original path par bhej rahe hain
-        # Taake Blogger ya Vercel static files ise handle kar sakein bina loop ke.
         return redirect(f"https://www.jarrylabs.com/{path}", code=302)
 
-    # --- 🔗 ORIGINAL SHORT LINK LOGIC ---
-    # Agar upar wali conditions match nahi hoti, tab database check karo
     short_code = path 
     if short_code in ['shorten', 'favicon.ico']: return "", 204
     
@@ -53,7 +84,6 @@ def handle_all_routes(path):
     except Exception as e:
         print(f"Error: {e}")
     
-    # Agar database mein bhi nahi mila, toh home page par bhej do
     return redirect('/')
 
 @app.route('/shorten', methods=['POST'])
@@ -68,4 +98,5 @@ def shorten():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+# Vercel requirements
 app = app
