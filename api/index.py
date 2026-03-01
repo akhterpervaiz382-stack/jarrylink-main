@@ -86,7 +86,7 @@ HTML_TOOL = """
 
             <div id="result" class="mt-12 hidden p-8 bg-emerald-50 border border-emerald-100 rounded-3xl">
                 <p class="text-[11px] text-emerald-600 font-bold uppercase mb-3 tracking-widest">Branded Link Ready</p>
-                <div class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 tracking-tight" id="linkSpan">jarrylink.site/custom</div>
+                <div class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 tracking-tight" id="linkSpan">jarrylink/custom</div>
                 <button onclick="copyLink()" id="copyBtn" class="bg-slate-900 text-white px-10 py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-emerald-600 transition">
                     Copy Branded URL
                 </button>
@@ -196,7 +196,7 @@ HTML_TOOL = """
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('linkSpan').innerText = `jarrylink.site/${code}`;
+                    document.getElementById('linkSpan').innerText = `jarrylink/${code}`;
                     btn.innerText = "DONE";
                     setTimeout(() => { btn.innerText = "SHORTEN"; }, 2000);
                 } else {
