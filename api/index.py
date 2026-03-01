@@ -124,13 +124,13 @@ HTML_TOOL = """
                 <div class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
                     <h5 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Explore Resources</h5>
                     <div class="space-y-4">
-                        <a href="https://jarrylabs.com" class="block p-4 bg-slate-50 rounded-xl border border-transparent hover:border-emerald-500 transition text-xs font-bold uppercase text-slate-700">
+                        <a href="https://www.jarrylabs.com/p/best-seo-free-tools.html" class="block p-4 bg-slate-50 rounded-xl border border-transparent hover:border-emerald-500 transition text-xs font-bold uppercase text-slate-700">
                             SEO Tools Dashboard
                         </a>
-                        <a href="https://jarrylabs.com/search/label/Case%20Studies" class="block p-4 bg-slate-50 rounded-xl border border-transparent hover:border-blue-500 transition text-xs font-bold uppercase text-slate-700">
+                        <a href="https://www.jarrylabs.com/2026/02/advanced-keyword-research-strategies-2026-high-intent-seo-blueprint-usa.html" class="block p-4 bg-slate-50 rounded-xl border border-transparent hover:border-blue-500 transition text-xs font-bold uppercase text-slate-700">
                             View Case Studies
                         </a>
-                        <a href="https://jarrylabs.com" class="block p-4 bg-slate-50 rounded-xl border border-transparent hover:border-purple-500 transition text-xs font-bold uppercase text-slate-700">
+                        <a href="https://www.jarrylabs.com/2026/02/google-url-shortener-free-alternative-2026.html" class="block p-4 bg-slate-50 rounded-xl border border-transparent hover:border-purple-500 transition text-xs font-bold uppercase text-slate-700">
                             Local SEO Guide
                         </a>
                     </div>
