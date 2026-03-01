@@ -73,7 +73,7 @@ HTML_TOOL = """
                 <div class="md:col-span-4 text-left">
                     <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Custom Alias (Optional)</label>
                     <div class="flex items-center bg-slate-50 rounded-xl mt-2 overflow-hidden border border-slate-200">
-                        <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink/</span>
+                        <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink.site/</span>
                         <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none font-medium">
                     </div>
                 </div>
