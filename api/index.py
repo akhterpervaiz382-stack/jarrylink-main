@@ -124,30 +124,36 @@ HTML_TOOL = """
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="testimonial-card p-8 rounded-3xl">
                     <div class="flex items-center mb-6">
-                        <img src="/images/EmilyP.png" alt="Emily P." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
                         <div>
-                            <div class="font-bold text-slate-900">Emily P.</div>
-                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <div class="font-bold text-slate-900">2000+ Reviews</div>
+                            <div class="flex text-amber-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="ml-2 text-slate-700 font-bold">4.9 / 5</span>
+                            </div>
                         </div>
                     </div>
                     <p class="text-slate-600">"JarryLink completely changed how I share my content on social media. Simple and fast!"</p>
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
                     <div class="flex items-center mb-6">
-                        <img src="/images/JamesH.png" alt="James H." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
                         <div>
-                            <div class="font-bold text-slate-900">James H.</div>
-                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <div class="font-bold text-slate-900">2000+ Reviews</div>
+                            <div class="flex text-amber-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="ml-2 text-slate-700 font-bold">4.9 / 5</span>
+                            </div>
                         </div>
                     </div>
                     <p class="text-slate-600">"Finally a reliable, free alternative to Bitly. The custom alias feature is amazing."</p>
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
                     <div class="flex items-center mb-6">
-                        <img src="/images/OliverB.png" alt="Oliver B." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
                         <div>
-                            <div class="font-bold text-slate-900">Oliver B.</div>
-                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <div class="font-bold text-slate-900">2000+ Reviews</div>
+                            <div class="flex text-amber-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="ml-2 text-slate-700 font-bold">4.9 / 5</span>
+                            </div>
                         </div>
                     </div>
                     <p class="text-slate-600">"Great tool for tracking clicks. Very user-friendly interface."</p>
