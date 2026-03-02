@@ -74,7 +74,7 @@ PRIVACY_CONTENT = """
 <div class="prose">
     <h1>Privacy Policy</h1>
     <p>Last updated: March 3, 2026</p>
-    <p>At JarryLink, accessible from jarrylink.site, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by JarryLink and how we use it.</p>
+    <p>At JarryLink, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by JarryLink and how we use it.</p>
     
     <h2>Information We Collect</h2>
     <p>When you use our URL shortener, we collect the original URL you wish to shorten and the custom alias you choose. We also collect technical data such as IP addresses to prevent abuse of our service.</p>
@@ -164,9 +164,9 @@ HTML_TOOL = """
                     <div class="md:col-span-4 text-left">
                         <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Custom Alias</label>
                         <div class="flex items-center bg-slate-50 rounded-xl mt-2 overflow-hidden border border-slate-200">
-                            <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink.site/</span>
-                            <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none font-medium">
+                            <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink/</span>
                         </div>
+                        <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none font-medium">
                     </div>
                     <div class="md:col-span-2">
                         <button onclick="shortenLink()" id="btn" class="w-full py-4 btn-primary rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg">Shorten</button>
@@ -210,7 +210,7 @@ HTML_TOOL = """
                         <div class="bg-emerald-100 p-4 rounded-full mr-4"><i class="fas fa-tag text-emerald-600 text-xl"></i></div>
                         <div><div class="font-bold text-slate-900 text-lg">Custom Brand Names</div></div>
                     </div>
-                    <p class="text-slate-600">Make your links recognizable. Use your own brand name after jarrylink.site/ for better trust.</p>
+                    <p class="text-slate-600">Make your links recognizable. Use your own brand name after jarrylink/ for better trust.</p>
                 </div>
             </div>
         </div>
@@ -270,7 +270,7 @@ HTML_TOOL = """
                 <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Can I use this as a sentence shortener?</h4><p class="text-slate-300 text-sm">While primarily for URLs, you can use it to create short codes that represent long sentences or paragraphs for easy sharing.</p></div>
                 <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is there a Google URL shortener free version?</h4><p class="text-slate-300 text-sm">Google has discontinued its service, but JarryLink serves as a reliable and unstoppable replacement.</p></div>
                 <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is this an AI video shortener free online tool?</h4><p class="text-slate-300 text-sm">You can shorten long video links from any platform using our AI-ready infrastructure for better branding.</p></div>
-                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Does it support custom names for links?</h4><p class="text-slate-300 text-sm">Absolutely! You can create custom branded URLs like jarrylink.site/YourBrandName.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Does it support custom names for links?</h4><p class="text-slate-300 text-sm">Absolutely! You can create custom branded URLs like jarrylink/YourBrandName.</p></div>
                 <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is this the highest paying link shortener?</h4><p class="text-slate-300 text-sm">We focus on clean redirection and branding. For monetization, stay tuned for our upcoming premium features.</p></div>
                 <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Can I use a Chrome extension?</h4><p class="text-slate-300 text-sm">A dedicated JarryLink Chrome extension is currently in development to make shortening even faster.</p></div>
                 <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Are my links permanent?</h4><p class="text-slate-300 text-sm">Yes, links created on JarryLink are designed to be permanent and fast.</p></div>
@@ -304,7 +304,7 @@ HTML_TOOL = """
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('linkSpan').innerText = `jarrylink.site/${code}`;
+                    document.getElementById('linkSpan').innerText = `jarrylink/${code}`;
                     btn.innerText = "DONE";
                     setTimeout(() => { btn.innerText = "SHORTEN"; }, 2000);
                 } else { alert("Alias taken!"); btn.innerText = "ERROR"; }
@@ -314,6 +314,7 @@ HTML_TOOL = """
         function copyLink() {
             const displayText = document.getElementById('linkSpan').innerText;
             const code = displayText.split('/')[1];
+            // Yahan wahi working link rakha hai taake browser mein kaam kare
             const workingLink = "https://jarrylink.site/" + code;
             navigator.clipboard.writeText(workingLink).then(() => {
                 const copyBtn = document.getElementById('copyBtn');
