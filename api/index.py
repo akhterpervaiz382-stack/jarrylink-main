@@ -118,43 +118,45 @@ HTML_TOOL = """
         </div>
     </section>
 
-    <section class="py-20 px-6 bg-slate-50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-extrabold mb-12 text-center text-slate-900">Trusted by Happy Users</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex items-center mb-6">
-                        <img src="images/Emily P.png" alt="Emily P." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
-                        <div>
-                            <div class="font-bold text-slate-900">Emily P.</div>
-                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
+ <section class="py-20 px-6 bg-slate-50">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-extrabold mb-12 text-center text-slate-900">Trusted by Happy Users</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="testimonial-card p-8 rounded-3xl">
+                <div class="flex items-center mb-6">
+                    <img src="images/EmilyP.png" alt="Emily P." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                    <div>
+                        <div class="font-bold text-slate-900">Emily P.</div>
+                        <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                     </div>
-                    <p class="text-slate-600">"JarryLink completely changed how I share my content on social media. Simple and fast!"</p>
                 </div>
-                <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex items-center mb-6">
-                       img src="images/James H.png" alt="James H." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
-                        <div>
-                            <div class="font-bold text-slate-900">James H.</div>
-                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
+                <p class="text-slate-600">"JarryLink completely changed how I share my content on social media. Simple and fast!"</p>
+            </div>
+            
+            <div class="testimonial-card p-8 rounded-3xl">
+                <div class="flex items-center mb-6">
+                    <img src="images/JamesH.png" alt="James H." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                    <div>
+                        <div class="font-bold text-slate-900">James H.</div>
+                        <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                     </div>
-                    <p class="text-slate-600">"Finally a reliable, free alternative to Bitly. The custom alias feature is amazing."</p>
                 </div>
-                <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex items-center mb-6">
-                        <img src="images/Oliver B.png" alt="Oliver B." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
-                        <div>
-                            <div class="font-bold text-slate-900">Oliver B.</div>
-                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
+                <p class="text-slate-600">"Finally a reliable, free alternative to Bitly. The custom alias feature is amazing."</p>
+            </div>
+            
+            <div class="testimonial-card p-8 rounded-3xl">
+                <div class="flex items-center mb-6">
+                    <img src="images/OliverB.png" alt="Oliver B." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                    <div>
+                        <div class="font-bold text-slate-900">Oliver B.</div>
+                        <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                     </div>
-                    <p class="text-slate-600">"Great tool for tracking clicks. Very user-friendly interface."</p>
                 </div>
+                <p class="text-slate-600">"Great tool for tracking clicks. Very user-friendly interface."</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section class="py-20 px-6">
         <div class="max-w-4xl mx-auto text-center">
