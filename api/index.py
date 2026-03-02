@@ -128,8 +128,8 @@ HTML_TOOL = """
         .text-gradient { background: linear-gradient(90deg, #059669, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-primary { background: linear-gradient(90deg, #10b981, #059669); color: white; transition: 0.3s; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
-        .faq-box { background: #ffffff; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 1rem; transition: 0.3s; }
-        .faq-box:hover { border-color: #10b981; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1); }
+        .tool-box { background: #ffffff; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 1rem; transition: 0.3s; }
+        .tool-box:hover { border-color: #3b82f6; box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1); transform: translateY(-2px); }
         input { border: 1.5px solid #e2e8f0 !important; }
         input:focus { border-color: #10b981 !important; outline: none; }
         .stat-card { background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border: 1px solid #e2e8f0; transition: 0.3s; }
@@ -144,7 +144,7 @@ HTML_TOOL = """
             <a href="#" class="hover:text-emerald-600">Home</a>
             <a href="#features" class="hover:text-emerald-600">Features</a>
             <a href="#tool" class="hover:text-emerald-600">Shortener</a>
-            <a href="#faq" class="hover:text-emerald-600">FAQs</a>
+            <a href="#about" class="hover:text-emerald-600">About</a>
         </div>
         <a href="https://jarrylabs.com" class="text-xs font-bold bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-emerald-600 transition">JARRYLABS</a>
     </nav>
@@ -189,20 +189,51 @@ HTML_TOOL = """
     </section>
     <section class="py-20 px-6 bg-slate-50">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-extrabold mb-12 text-center text-slate-900">Trusted by Happy Users</h2>
+            <h2 class="text-4xl font-extrabold mb-12 text-center text-slate-900">Why Choose JarryLink?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex items-center mb-6"><div><div class="font-bold text-slate-900">2000+ Reviews</div><div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span class="ml-2 text-slate-700 font-bold">4.9 / 5</span></div></div></div>
-                    <p class="text-slate-600">"JarryLink completely changed how I share my content on social media. Simple and fast!"</p>
+                    <div class="flex items-center mb-6">
+                        <div class="bg-emerald-100 p-4 rounded-full mr-4"><i class="fas fa-heart text-emerald-600 text-xl"></i></div>
+                        <div><div class="font-bold text-slate-900 text-lg">2000+ Happy Users</div></div>
+                    </div>
+                    <p class="text-slate-600">Join thousands of creators and marketers who trust JarryLink to manage their links efficiently.</p>
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex items-center mb-6"><div><div class="font-bold text-slate-900">2000+ Reviews</div><div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span class="ml-2 text-slate-700 font-bold">4.9 / 5</span></div></div></div>
-                    <p class="text-slate-600">"Finally a reliable, free alternative to Bitly. The custom alias feature is amazing."</p>
+                    <div class="flex items-center mb-6">
+                        <div class="bg-emerald-100 p-4 rounded-full mr-4"><i class="fas fa-bolt text-emerald-600 text-xl"></i></div>
+                        <div><div class="font-bold text-slate-900 text-lg">Free & Easy to Use</div></div>
+                    </div>
+                    <p class="text-slate-600">No hidden fees, no complex setup. Just paste, shorten, and share in a matter of seconds.</p>
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex items-center mb-6"><div><div class="font-bold text-slate-900">2000+ Reviews</div><div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span class="ml-2 text-slate-700 font-bold">4.9 / 5</span></div></div></div>
-                    <p class="text-slate-600">"Great tool for tracking clicks. Very user-friendly interface."</p>
+                    <div class="flex items-center mb-6">
+                        <div class="bg-emerald-100 p-4 rounded-full mr-4"><i class="fas fa-tag text-emerald-600 text-xl"></i></div>
+                        <div><div class="font-bold text-slate-900 text-lg">Custom Brand Names</div></div>
+                    </div>
+                    <p class="text-slate-600">Make your links recognizable. Use your own brand name after jarrylink.site/ for better trust.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+    <section id="about" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center prose prose-slate mx-auto">
+            <h2 class="text-4xl font-extrabold mb-8 text-slate-900">The Ultimate Link Management Tool</h2>
+            <p>Welcome to JarryLink, the premier solution for creating branded, memorable, and high-performance links. In today's digital landscape, the link you share is a reflection of your brand. A long, messy URL not only looks unprofessional but can also deter potential clicks. JarryLink solves this by allowing you to transform any lengthy web address into a sleek, customized link that aligns perfectly with your brand identity.</p>
+            
+            <h3>How to Use JarryLink</h3>
+            <p>Using JarryLink is incredibly simple. Follow these steps to start branding your links:</p>
+            <ul>
+                <li><strong>Step 1:</strong> Copy the long URL you want to shorten from your browser.</li>
+                <li><strong>Step 2:</strong> Paste it into the "Paste Long URL" box above.</li>
+                <li><strong>Step 3:</strong> Enter a custom word in the "Custom Alias" box (e.g., your campaign name or brand).</li>
+                <li><strong>Step 4:</strong> Click the "Shorten" button.</li>
+                <li><strong>Step 5:</strong> Click "Copy Branded URL" and share it anywhere!</li>
+            </ul>
+            
+            <p>Our tool is designed for speed and reliability, ensuring your links are always active. Whether you are running a social media campaign, managing YouTube links, or sharing documents, JarryLink provides the professional touch you need.</p>
+            
+            <div class="mt-12">
+                <a href="#tool" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-emerald-600 transition">Run the code</a>
             </div>
         </div>
     </section>
@@ -211,9 +242,21 @@ HTML_TOOL = """
             <h2 class="text-4xl font-extrabold mb-8 text-slate-900">More Tools to Grow Your Brand</h2>
             <p class="text-slate-600 mb-12">Discover our suite of free tools designed to streamline your workflow and enhance your content.</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <a href="https://jarrylabs.com" class="faq-box block"><h4 class="font-bold text-lg mb-2">YT Thumbnail Downloader</h4><p class="text-sm text-slate-500">Get high-quality thumbnails in seconds.</p></a>
-                <a href="https://www.jarrylabs.com/p/background-remover.html"faq-box block"><h4 class="font-bold text-lg mb-2">Background Remover</h4><p class="text-sm text-slate-500">Instantly remove backgrounds from images.</p></a>
-                <a href="https://www.jarrylabs.com/p/image-enhancer.html" class="faq-box block"><h4 class="font-bold text-lg mb-2">Image Enhancer</h4><p class="text-sm text-slate-500">Boost your image quality automatically.</p></a>
+                <a href="https://jarrylabs.com" class="tool-box block">
+                    <div class="bg-blue-100 text-blue-700 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-image"></i></div>
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">YT Thumbnail Downloader</h4>
+                    <p class="text-sm text-slate-500">Get high-quality thumbnails in seconds.</p>
+                </a>
+                <a href="https://www.jarrylabs.com/p/background-remover.html" class="tool-box block">
+                    <div class="bg-blue-100 text-blue-700 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-eraser"></i></div>
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">Background Remover</h4>
+                    <p class="text-sm text-slate-500">Instantly remove backgrounds from images.</p>
+                </a>
+                <a href="https://www.jarrylabs.com/p/image-enhancer.html" class="tool-box block">
+                    <div class="bg-blue-100 text-blue-700 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-magic"></i></div>
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">Image Enhancer</h4>
+                    <p class="text-sm text-slate-500">Boost your image quality automatically.</p>
+                </a>
             </div>
         </div>
     </section>
@@ -221,16 +264,16 @@ HTML_TOOL = """
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl font-extrabold mb-12 text-center">Frequently Asked Questions</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">What is JarryLink Custom URL Shortener?</h4><p class="text-slate-300 text-sm">JarryLink is a professional tool to create branded short links, making them easier to share and track.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is JarryLink a free Bitly alternative?</h4><p class="text-slate-300 text-sm">Yes, it is one of the best free Bitly alternatives, offering custom aliases without any hidden costs.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">How does the link shortener free online work?</h4><p class="text-slate-300 text-sm">Simply paste your long URL, choose a custom name, and click shorten to get your instant redirect link.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Can I use this as a sentence shortener?</h4><p class="text-slate-300 text-sm">While primarily for URLs, you can use it to create short codes that represent long sentences or paragraphs for easy sharing.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is there a Google URL shortener free version?</h4><p class="text-slate-300 text-sm">Google has discontinued its service, but JarryLink serves as a reliable and unstoppable replacement.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is this an AI video shortener free online tool?</h4><p class="text-slate-300 text-sm">You can shorten long video links from any platform using our AI-ready infrastructure for better branding.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Does it support custom names for links?</h4><p class="text-slate-300 text-sm">Absolutely! You can create custom branded URLs like jarrylink.site/YourBrandName.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is this the highest paying link shortener?</h4><p class="text-slate-300 text-sm">We focus on clean redirection and branding. For monetization, stay tuned for our upcoming premium features.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Can I use a Chrome extension?</h4><p class="text-slate-300 text-sm">A dedicated JarryLink Chrome extension is currently in development to make shortening even faster.</p></div>
-                <div class="faq-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Are my links permanent?</h4><p class="text-slate-300 text-sm">Yes, links created on JarryLink are designed to be permanent and fast.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">What is JarryLink Custom URL Shortener?</h4><p class="text-slate-300 text-sm">JarryLink is a professional tool to create branded short links, making them easier to share and track.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is JarryLink a free Bitly alternative?</h4><p class="text-slate-300 text-sm">Yes, it is one of the best free Bitly alternatives, offering custom aliases without any hidden costs.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">How does the link shortener free online work?</h4><p class="text-slate-300 text-sm">Simply paste your long URL, choose a custom name, and click shorten to get your instant redirect link.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Can I use this as a sentence shortener?</h4><p class="text-slate-300 text-sm">While primarily for URLs, you can use it to create short codes that represent long sentences or paragraphs for easy sharing.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is there a Google URL shortener free version?</h4><p class="text-slate-300 text-sm">Google has discontinued its service, but JarryLink serves as a reliable and unstoppable replacement.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is this an AI video shortener free online tool?</h4><p class="text-slate-300 text-sm">You can shorten long video links from any platform using our AI-ready infrastructure for better branding.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Does it support custom names for links?</h4><p class="text-slate-300 text-sm">Absolutely! You can create custom branded URLs like jarrylink.site/YourBrandName.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Is this the highest paying link shortener?</h4><p class="text-slate-300 text-sm">We focus on clean redirection and branding. For monetization, stay tuned for our upcoming premium features.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Can I use a Chrome extension?</h4><p class="text-slate-300 text-sm">A dedicated JarryLink Chrome extension is currently in development to make shortening even faster.</p></div>
+                <div class="tool-box bg-slate-800 border-slate-700"><h4 class="font-bold text-lg mb-2">Are my links permanent?</h4><p class="text-slate-300 text-sm">Yes, links created on JarryLink are designed to be permanent and fast.</p></div>
             </div>
         </div>
     </section>
