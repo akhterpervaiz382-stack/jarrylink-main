@@ -124,7 +124,7 @@ HTML_TOOL = """
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="testimonial-card p-8 rounded-3xl">
                     <div class="flex items-center mb-6">
-                        <img src="images/EmilyP.png" alt="Emily P." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                        <img src="/images/EmilyP.png" alt="Emily P." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
                         <div>
                             <div class="font-bold text-slate-900">Emily P.</div>
                             <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
@@ -134,7 +134,7 @@ HTML_TOOL = """
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
                     <div class="flex items-center mb-6">
-                        <img src="images/JamesH.png" alt="James H." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                        <img src="/images/JamesH.png" alt="James H." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
                         <div>
                             <div class="font-bold text-slate-900">James H.</div>
                             <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
@@ -144,7 +144,7 @@ HTML_TOOL = """
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
                     <div class="flex items-center mb-6">
-                        <img src="images/OliverB.png" alt="Oliver B." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                        <img src="/images/OliverB.png" alt="Oliver B." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
                         <div>
                             <div class="font-bold text-slate-900">Oliver B.</div>
                             <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
