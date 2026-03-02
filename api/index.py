@@ -22,6 +22,10 @@ HTML_TOOL = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JarryLink | Best Free URL Shortener & Custom Branded Short Links</title>
+    
+    <meta name="description" content="JarryLink is the best free URL shortener with custom names. Use our link shortener free online to create branded links, shorten sentences, and paragraphs.">
+    <meta name="keywords" content="link shortener free online, url shortener free, custom url shortener, ai video shortener free online, sentence shortener, paragraph shortener, google url shortener free, bitly alternative, best free url shortener, url shortener with custom name, url shortener chrome extension, link shortener highest paying">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -32,7 +36,7 @@ HTML_TOOL = """
         .text-gradient { background: linear-gradient(90deg, #059669, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-primary { background: linear-gradient(90deg, #10b981, #059669); color: white; transition: 0.3s; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
-        .faq-box { background: #f8fafc; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 0.75rem; }
+        .faq-box { background: #f8fafc; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem; }
         input { border: 1.5px solid #e2e8f0 !important; }
         input:focus { border-color: #10b981 !important; outline: none; }
     </style>
@@ -42,8 +46,8 @@ HTML_TOOL = """
     <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md py-4 px-6 flex justify-between items-center border-b border-slate-100">
         <div class="text-2xl font-extrabold tracking-tighter text-gradient">JarryLink 🚀</div>
         <div class="hidden md:flex space-x-8 text-[12px] font-bold uppercase tracking-widest text-slate-600">
-            <a href="#" class="hover:text-emerald-600">Architect</a>
-            <a href="#content" class="hover:text-emerald-600">SEO Strategy</a>
+            <a href="#" class="hover:text-emerald-600">Home</a>
+            <a href="https://www.jarrylabs.com/search?max-results=120" target="_blank" class="hover:text-emerald-600">Blog</a>
             <a href="#faq" class="hover:text-emerald-600">FAQs</a>
         </div>
         <a href="https://jarrylabs.com" class="text-xs font-bold bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-emerald-600 transition">JARRYLABS TOOLS</a>
@@ -85,15 +89,67 @@ HTML_TOOL = """
         </div>
     </section>
 
-    <section id="faq" class="py-24 px-6 bg-slate-50 text-center">
-        <h2 class="text-3xl font-extrabold mb-12">Common Questions</h2>
-        <div class="max-w-2xl mx-auto space-y-4">
-            <div class="faq-box text-left">
-                <h4 class="font-bold">Is it free?</h4>
-                <p class="text-slate-600 text-sm">Yes, JarryLink is 100% free for everyone.</p>
+    <section id="faq" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-extrabold mb-12 text-center">Frequently Asked Questions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                <div class="faq-box">
+                    <h4 class="font-bold">What is JarryLink Custom URL Shortener?</h4>
+                    <p class="text-slate-600 text-sm">JarryLink is a professional tool to create branded short links, making them easier to share and track.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Is JarryLink a free Bitly alternative?</h4>
+                    <p class="text-slate-600 text-sm">Yes, it is one of the best free Bitly alternatives, offering custom aliases without any hidden costs.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">How does the link shortener free online work?</h4>
+                    <p class="text-slate-600 text-sm">Simply paste your long URL, choose a custom name, and click shorten to get your instant redirect link.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Can I use this as a sentence shortener?</h4>
+                    <p class="text-slate-600 text-sm">While primarily for URLs, you can use it to create short codes that represent long sentences or paragraphs for easy sharing.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Is there a Google URL shortener free version?</h4>
+                    <p class="text-slate-600 text-sm">Google has discontinued its service, but JarryLink serves as a reliable and unstoppable replacement.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Is this an AI video shortener free online tool?</h4>
+                    <p class="text-slate-600 text-sm">You can shorten long video links from any platform using our AI-ready infrastructure for better branding.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Does it support custom names for links?</h4>
+                    <p class="text-slate-600 text-sm">Absolutely! You can create custom branded URLs like jarrylink.site/YourBrandName.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Is this the highest paying link shortener?</h4>
+                    <p class="text-slate-600 text-sm">We focus on clean redirection and branding. For monetization, stay tuned for our upcoming premium features.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Can I use a Chrome extension?</h4>
+                    <p class="text-slate-600 text-sm">A dedicated JarryLink Chrome extension is currently in development to make shortening even faster.</p>
+                </div>
+                <div class="faq-box">
+                    <h4 class="font-bold">Are my links permanent?</h4>
+                    <p class="text-slate-600 text-sm">Yes, links created on JarryLink are designed to be permanent and fast.</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <footer class="py-12 border-t border-slate-200 bg-white px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 text-left">
+                <div class="text-xl font-extrabold text-gradient">JarryLink 🚀</div>
+                <p class="text-xs text-slate-500 mt-2">© 2026 JarryLabs. All rights reserved. Your link shortening partner.</p>
+            </div>
+            <div class="flex space-x-6 text-xs font-bold uppercase tracking-widest text-slate-400">
+                <a href="https://jarrylabs.com" class="hover:text-emerald-600">Main Site</a>
+                <a href="#" class="hover:text-emerald-600">Privacy Policy</a>
+                <a href="#" class="hover:text-emerald-600">Terms</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         async function shortenLink() {
@@ -115,7 +171,6 @@ HTML_TOOL = """
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    // Display Branded (Jarrylink/code)
                     document.getElementById('linkSpan').innerText = `jarrylink/${code}`;
                     btn.innerText = "DONE";
                     setTimeout(() => { btn.innerText = "SHORTEN"; }, 2000);
@@ -128,11 +183,8 @@ HTML_TOOL = """
         }
 
         function copyLink() {
-            // Hum display se code nikalenge
             const displayText = document.getElementById('linkSpan').innerText;
             const code = displayText.split('/')[1];
-            
-            // Clipboard mein REAL working URL bhejenge
             const workingLink = "https://jarrylink.site/" + code;
             
             navigator.clipboard.writeText(workingLink).then(() => {
@@ -163,7 +215,6 @@ def handle_all_routes(path):
         res = supabase.table('links').select("original_url").eq("short_code", short_code).execute()
         if res.data:
             url = res.data[0]['original_url']
-            # Ensure URL has protocol
             target = url if url.startswith('http') else 'https://'+url
             return redirect(target, code=301)
     except Exception as e:
