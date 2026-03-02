@@ -14,7 +14,7 @@ supabase_url = os.environ.get("SUPABASE_URL")
 supabase_key = os.environ.get("SUPABASE_KEY")
 supabase = create_client(supabase_url, supabase_key)
 
-# --- JARRYLABS CLEAN PROFESSIONAL INTERFACE ---
+# --- JARRYLABS PROFESSIONAL LANDING PAGE ---
 HTML_TOOL = """
 <!DOCTYPE html>
 <html lang="en">
@@ -31,130 +31,156 @@ HTML_TOOL = """
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #1e293b; scroll-behavior: smooth; }
-        .hero-gradient { background: radial-gradient(circle at 50% 0%, #f0fdf4 0%, #ffffff 70%); }
-        .tool-card { background: #ffffff; border: 2px solid #e2e8f0; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); transition: 0.4s; }
+        .hero-gradient { background: radial-gradient(circle at 50% -20%, #f0fdf4 0%, #ffffff 50%); }
+        .tool-card { background: #ffffff; border: 2px solid #e2e8f0; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); }
         .text-gradient { background: linear-gradient(90deg, #059669, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-primary { background: linear-gradient(90deg, #10b981, #059669); color: white; transition: 0.3s; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
-        .faq-box { background: #f8fafc; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+        .faq-box { background: #ffffff; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 1rem; transition: 0.3s; }
+        .faq-box:hover { border-color: #10b981; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1); }
         input { border: 1.5px solid #e2e8f0 !important; }
         input:focus { border-color: #10b981 !important; outline: none; }
-        .sidebar-link { display: block; padding: 1rem; background: white; border: 1px solid #e2e8f0; border-radius: 0.75rem; transition: 0.3s; }
-        .sidebar-link:hover { border-color: #10b981; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1); }
+        .stat-card { background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border: 1px solid #e2e8f0; transition: 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); border-color: #10b981; }
+        .testimonial-card { background: white; border: 1px solid #e2e8f0; }
     </style>
 </head>
 <body class="hero-gradient">
 
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md py-4 px-6 flex justify-between items-center border-b border-slate-100">
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm py-4 px-6 flex justify-between items-center border-b border-slate-100">
         <div class="text-2xl font-extrabold tracking-tighter text-gradient">JarryLink 🚀</div>
-        <div class="hidden md:flex space-x-8 text-[12px] font-bold uppercase tracking-widest text-slate-600">
+        <div class="hidden md:flex space-x-8 text-[13px] font-bold uppercase tracking-widest text-slate-700">
             <a href="#" class="hover:text-emerald-600">Home</a>
-            <a href="https://www.jarrylabs.com/search?max-results=120" target="_blank" class="hover:text-emerald-600">Blog</a>
+            <a href="#features" class="hover:text-emerald-600">Features</a>
+            <a href="#tool" class="hover:text-emerald-600">Shortener</a>
             <a href="#faq" class="hover:text-emerald-600">FAQs</a>
         </div>
-        <a href="https://jarrylabs.com" class="text-xs font-bold bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-emerald-600 transition">JARRYLABS TOOLS</a>
+        <a href="https://jarrylabs.com" class="text-xs font-bold bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-emerald-600 transition">JARRYLABS</a>
     </nav>
 
-    <section class="pt-44 pb-24 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10">
-            
-            <div class="lg:col-span-3 text-center lg:text-left">
-                <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-bold uppercase tracking-widest mb-8">
-                    Fastest Free URL Shortener 2026
-                </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight text-slate-900 leading-tight">
-                    Shorten Links. <span class="text-gradient">Grow Authority.</span>
-                </h1>
-                
-                <div class="tool-card p-10 md:p-14 rounded-[2.5rem] relative">
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
-                        <div class="md:col-span-6 text-left">
-                            <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Paste Long URL</label>
-                            <input type="text" id="longUrl" placeholder="https://example.com/your-content" class="w-full mt-2 p-4 bg-slate-50 rounded-xl font-medium">
-                        </div>
-                        <div class="md:col-span-4 text-left">
-                            <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Custom Alias</label>
-                            <div class="flex items-center bg-slate-50 rounded-xl mt-2 overflow-hidden border border-slate-200">
-                                <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink.site/</span>
-                                <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none font-medium">
-                            </div>
-                        </div>
-                        <div class="md:col-span-2">
-                            <button onclick="shortenLink()" id="btn" class="w-full py-4 btn-primary rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg">Shorten</button>
-                        </div>
-                    </div>
+    <header class="pt-40 pb-20 px-6 text-center">
+        <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-bold uppercase tracking-widest mb-6">
+            Fastest Free URL Shortener 2026
+        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight text-slate-900 leading-tight">
+            Shorten Links. <span class="text-gradient">Grow Authority.</span>
+        </h1>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
+            JarryLink helps you create branded, short, and memorable links to boost your online presence and track your traffic effortlessly.
+        </p>
+    </header>
 
-                    <div id="result" class="mt-12 hidden p-8 bg-emerald-50 border border-emerald-100 rounded-3xl">
-                        <p class="text-[11px] text-emerald-600 font-bold uppercase mb-3 tracking-widest">Branded Link Ready</p>
-                        <div class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 tracking-tight" id="linkSpan">jarrylink/custom</div>
-                        <button onclick="copyLink()" id="copyBtn" class="bg-slate-900 text-white px-10 py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-emerald-600 transition">
-                            Copy Branded URL
-                        </button>
+    <section id="tool" class="py-10 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="tool-card p-10 md:p-14 rounded-[2.5rem]">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+                    <div class="md:col-span-6 text-left">
+                        <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Paste Long URL</label>
+                        <input type="text" id="longUrl" placeholder="https://example.com/your-content" class="w-full mt-2 p-4 bg-slate-50 rounded-xl font-medium">
                     </div>
+                    <div class="md:col-span-4 text-left">
+                        <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Custom Alias</label>
+                        <div class="flex items-center bg-slate-50 rounded-xl mt-2 overflow-hidden border border-slate-200">
+                            <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink.site/</span>
+                            <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none font-medium">
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <button onclick="shortenLink()" id="btn" class="w-full py-4 btn-primary rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg">Shorten</button>
+                    </div>
+                </div>
+
+                <div id="result" class="mt-12 hidden p-8 bg-emerald-50 border border-emerald-100 rounded-3xl">
+                    <p class="text-[11px] text-emerald-600 font-bold uppercase mb-3 tracking-widest">Branded Link Ready</p>
+                    <div class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 tracking-tight" id="linkSpan">jarrylink/custom</div>
+                    <button onclick="copyLink()" id="copyBtn" class="bg-slate-900 text-white px-10 py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-emerald-600 transition">
+                        Copy Branded URL
+                    </button>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="space-y-6">
-                <h3 class="text-xl font-bold text-slate-900">Top SEO Articles</h3>
-                <a href="https://www.jarrylabs.com/p/free-branded-url-shortener-custom-link.html" target="_blank" class="sidebar-link">
-                    <p class="font-bold text-slate-800">Custom URL Strategy</p>
-                    <p class="text-sm text-slate-500">Boost brand recognition with branded links.</p>
+    <section id="features" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="stat-card p-8 rounded-3xl text-center">
+                <div class="text-5xl font-extrabold text-gradient mb-3">10,000+</div>
+                <p class="text-slate-600 font-bold">Links Generated</p>
+            </div>
+            <div class="stat-card p-8 rounded-3xl text-center">
+                <div class="text-5xl font-extrabold text-gradient mb-3">99.9%</div>
+                <p class="text-slate-600 font-bold">Uptime Guaranteed</p>
+            </div>
+            <div class="stat-card p-8 rounded-3xl text-center">
+                <div class="text-5xl font-extrabold text-gradient mb-3">100%</div>
+                <p class="text-slate-600 font-bold">Free to Use</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-extrabold mb-12 text-center text-slate-900">Trusted by Happy Users</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card p-8 rounded-3xl">
+                    <div class="flex text-amber-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="text-slate-600 mb-6">"JarryLink completely changed how I share my content on social media. Simple and fast!"</p>
+                    <div class="font-bold text-slate-900">Sarah J. - Content Creator</div>
+                </div>
+                <div class="testimonial-card p-8 rounded-3xl">
+                    <div class="flex text-amber-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="text-slate-600 mb-6">"Finally a reliable, free alternative to Bitly. The custom alias feature is amazing."</p>
+                    <div class="font-bold text-slate-900">Mark R. - Digital Marketer</div>
+                </div>
+                <div class="testimonial-card p-8 rounded-3xl">
+                    <div class="flex text-amber-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="text-slate-600 mb-6">"Great tool for tracking clicks. Very user-friendly interface."</p>
+                    <div class="font-bold text-slate-900">Anita K. - Social Media Manager</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-extrabold mb-8 text-slate-900">More Tools to Grow Your Brand</h2>
+            <p class="text-slate-600 mb-12">Discover our suite of free tools designed to streamline your workflow and enhance your content.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="https://jarrylabs.com" class="faq-box block">
+                    <h4 class="font-bold text-lg mb-2">YT Thumbnail Downloader</h4>
+                    <p class="text-sm text-slate-500">Get high-quality thumbnails in seconds.</p>
                 </a>
-                <a href="https://www.jarrylabs.com/p/best-seo-free-tools.html" target="_blank" class="sidebar-link">
-                    <p class="font-bold text-slate-800">Best Free SEO Tools</p>
-                    <p class="text-sm text-slate-500">List of top tools for local and technical SEO.</p>
+                <a href="https://jarrylabs.com" class="faq-box block">
+                    <h4 class="font-bold text-lg mb-2">Background Remover</h4>
+                    <p class="text-sm text-slate-500">Instantly remove backgrounds from images.</p>
                 </a>
-                <a href="https://www.jarrylabs.com/search?max-results=120" target="_blank" class="sidebar-link">
-                    <p class="font-bold text-slate-800">Highest Paying Shorteners</p>
-                    <p class="text-sm text-slate-500">Guide to monetizing your link traffic.</p>
+                <a href="https://jarrylabs.com" class="faq-box block">
+                    <h4 class="font-bold text-lg mb-2">Image Enhancer</h4>
+                    <p class="text-sm text-slate-500">Boost your image quality automatically.</p>
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="faq" class="py-24 px-6 bg-slate-50">
-        <div class="max-w-4xl mx-auto">
+    <section id="faq" class="py-20 px-6 bg-slate-900 text-white rounded-t-[3rem]">
+        <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl font-extrabold mb-12 text-center">Frequently Asked Questions</h2>
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-                <div class="faq-box">
-                    <h4 class="font-bold">What is JarryLink Custom URL Shortener?</h4>
-                    <p class="text-slate-600 text-sm">JarryLink is a professional tool to create branded short links, making them easier to share and track.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">What is JarryLink?</h4>
+                    <p class="text-slate-300 text-sm">A professional tool to create branded short links, making them easier to share.</p>
                 </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Is JarryLink a free Bitly alternative?</h4>
-                    <p class="text-slate-600 text-sm">Yes, it is one of the best free Bitly alternatives, offering custom aliases without any hidden costs.</p>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Is it really free?</h4>
+                    <p class="text-slate-300 text-sm">Yes, you can create unlimited branded links for free.</p>
                 </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">How does the link shortener free online work?</h4>
-                    <p class="text-slate-600 text-sm">Simply paste your long URL, choose a custom name, and click shorten to get your instant redirect link.</p>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Can I customize the alias?</h4>
+                    <p class="text-slate-300 text-sm">Absolutely! You can choose any available custom name for your link.</p>
                 </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Can I use this as a sentence shortener?</h4>
-                    <p class="text-slate-600 text-sm">While primarily for URLs, you can use it to create short codes that represent long sentences or paragraphs for easy sharing.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Is there a Google URL shortener free version?</h4>
-                    <p class="text-slate-600 text-sm">Google has discontinued its service, but JarryLink serves as a reliable and unstoppable replacement.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Is this an AI video shortener free online tool?</h4>
-                    <p class="text-slate-600 text-sm">You can shorten long video links from any platform using our AI-ready infrastructure for better branding.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Does it support custom names for links?</h4>
-                    <p class="text-slate-600 text-sm">Absolutely! You can create custom branded URLs like jarrylink.site/YourBrandName.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Is this the highest paying link shortener?</h4>
-                    <p class="text-slate-600 text-sm">We focus on clean redirection and branding. For monetization, stay tuned for our upcoming premium features.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Can I use a Chrome extension?</h4>
-                    <p class="text-slate-600 text-sm">A dedicated JarryLink Chrome extension is currently in development to make shortening even faster.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="font-bold">Are my links permanent?</h4>
-                    <p class="text-slate-600 text-sm">Yes, links created on JarryLink are designed to be permanent and fast.</p>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Are links permanent?</h4>
+                    <p class="text-slate-300 text-sm">Yes, links created on JarryLink are designed to be permanent.</p>
                 </div>
             </div>
         </div>
@@ -164,11 +190,11 @@ HTML_TOOL = """
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0 text-left">
                 <div class="text-xl font-extrabold text-gradient">JarryLink 🚀</div>
-                <p class="text-xs text-slate-500 mt-2">© 2026 JarryLabs. All rights reserved. Your link shortening partner.</p>
+                <p class="text-xs text-slate-500 mt-2">© 2026 JarryLabs. All rights reserved.</p>
             </div>
             <div class="flex space-x-6 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <a href="https://jarrylabs.com" class="hover:text-emerald-600">Main Site</a>
-                <a href="#" class="hover:text-emerald-600">Privacy Policy</a>
+                <a href="#" class="hover:text-emerald-600">Privacy</a>
                 <a href="#" class="hover:text-emerald-600">Terms</a>
             </div>
         </div>
@@ -194,7 +220,7 @@ HTML_TOOL = """
                 });
                 if(res.ok) {
                     document.getElementById('result').classList.remove('hidden');
-                    document.getElementById('linkSpan').innerText = `jarrylink/${code}`;
+                    document.getElementById('linkSpan').innerText = `jarrylink.site/${code}`;
                     btn.innerText = "DONE";
                     setTimeout(() => { btn.innerText = "SHORTEN"; }, 2000);
                 } else {
