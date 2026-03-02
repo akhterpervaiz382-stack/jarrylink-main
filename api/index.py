@@ -96,15 +96,15 @@ HTML_TOOL = """
 
             <div class="space-y-6">
                 <h3 class="text-xl font-bold text-slate-900">Top SEO Articles</h3>
-                <a href="https://www.jarrylabs.com/2026/01/how-to-use-custom-url-shorteners.html" target="_blank" class="sidebar-link">
+                <a href="https://www.jarrylabs.com/p/free-branded-url-shortener-custom-link.html" target="_blank" class="sidebar-link">
                     <p class="font-bold text-slate-800">Custom URL Strategy</p>
                     <p class="text-sm text-slate-500">Boost brand recognition with branded links.</p>
                 </a>
-                <a href="https://www.jarrylabs.com/2026/01/best-seo-tools-2026.html" target="_blank" class="sidebar-link">
+                <a href="https://www.jarrylabs.com/p/best-seo-free-tools.html" target="_blank" class="sidebar-link">
                     <p class="font-bold text-slate-800">Best Free SEO Tools</p>
                     <p class="text-sm text-slate-500">List of top tools for local and technical SEO.</p>
                 </a>
-                <a href="https://www.jarrylabs.com/2026/01/url-shortener-highest-paying.html" target="_blank" class="sidebar-link">
+                <a href="https://www.jarrylabs.com/search?max-results=120" target="_blank" class="sidebar-link">
                     <p class="font-bold text-slate-800">Highest Paying Shorteners</p>
                     <p class="text-sm text-slate-500">Guide to monetizing your link traffic.</p>
                 </a>
