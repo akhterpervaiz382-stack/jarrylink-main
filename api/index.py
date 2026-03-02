@@ -123,19 +123,34 @@ HTML_TOOL = """
             <h2 class="text-4xl font-extrabold mb-12 text-center text-slate-900">Trusted by Happy Users</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex text-amber-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-slate-600 mb-6">"JarryLink completely changed how I share my content on social media. Simple and fast!"</p>
-                    <div class="font-bold text-slate-900">Sarah J. - Content Creator</div>
+                    <div class="flex items-center mb-6">
+                        <img src="USER_IMAGE_1_URL" alt="Emily P." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                        <div>
+                            <div class="font-bold text-slate-900">Emily P.</div>
+                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600">"JarryLink completely changed how I share my content on social media. Simple and fast!"</p>
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex text-amber-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-slate-600 mb-6">"Finally a reliable, free alternative to Bitly. The custom alias feature is amazing."</p>
-                    <div class="font-bold text-slate-900">Mark R. - Digital Marketer</div>
+                    <div class="flex items-center mb-6">
+                        <img src="USER_IMAGE_2_URL" alt="James H." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                        <div>
+                            <div class="font-bold text-slate-900">James H.</div>
+                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600">"Finally a reliable, free alternative to Bitly. The custom alias feature is amazing."</p>
                 </div>
                 <div class="testimonial-card p-8 rounded-3xl">
-                    <div class="flex text-amber-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-slate-600 mb-6">"Great tool for tracking clicks. Very user-friendly interface."</p>
-                    <div class="font-bold text-slate-900">Anita K. - Social Media Manager</div>
+                    <div class="flex items-center mb-6">
+                        <img src="USER_IMAGE_3_URL" alt="Oliver B." class="w-16 h-16 rounded-full mr-4 border-2 border-emerald-100">
+                        <div>
+                            <div class="font-bold text-slate-900">Oliver B.</div>
+                            <div class="flex text-amber-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-slate-600">"Great tool for tracking clicks. Very user-friendly interface."</p>
                 </div>
             </div>
         </div>
@@ -167,20 +182,44 @@ HTML_TOOL = """
             <h2 class="text-4xl font-extrabold mb-12 text-center">Frequently Asked Questions</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="faq-box bg-slate-800 border-slate-700">
-                    <h4 class="font-bold text-lg mb-2">What is JarryLink?</h4>
-                    <p class="text-slate-300 text-sm">A professional tool to create branded short links, making them easier to share.</p>
+                    <h4 class="font-bold text-lg mb-2">What is JarryLink Custom URL Shortener?</h4>
+                    <p class="text-slate-300 text-sm">JarryLink is a professional tool to create branded short links, making them easier to share and track.</p>
                 </div>
                 <div class="faq-box bg-slate-800 border-slate-700">
-                    <h4 class="font-bold text-lg mb-2">Is it really free?</h4>
-                    <p class="text-slate-300 text-sm">Yes, you can create unlimited branded links for free.</p>
+                    <h4 class="font-bold text-lg mb-2">Is JarryLink a free Bitly alternative?</h4>
+                    <p class="text-slate-300 text-sm">Yes, it is one of the best free Bitly alternatives, offering custom aliases without any hidden costs.</p>
                 </div>
                 <div class="faq-box bg-slate-800 border-slate-700">
-                    <h4 class="font-bold text-lg mb-2">Can I customize the alias?</h4>
-                    <p class="text-slate-300 text-sm">Absolutely! You can choose any available custom name for your link.</p>
+                    <h4 class="font-bold text-lg mb-2">How does the link shortener free online work?</h4>
+                    <p class="text-slate-300 text-sm">Simply paste your long URL, choose a custom name, and click shorten to get your instant redirect link.</p>
                 </div>
                 <div class="faq-box bg-slate-800 border-slate-700">
-                    <h4 class="font-bold text-lg mb-2">Are links permanent?</h4>
-                    <p class="text-slate-300 text-sm">Yes, links created on JarryLink are designed to be permanent.</p>
+                    <h4 class="font-bold text-lg mb-2">Can I use this as a sentence shortener?</h4>
+                    <p class="text-slate-300 text-sm">While primarily for URLs, you can use it to create short codes that represent long sentences or paragraphs for easy sharing.</p>
+                </div>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Is there a Google URL shortener free version?</h4>
+                    <p class="text-slate-300 text-sm">Google has discontinued its service, but JarryLink serves as a reliable and unstoppable replacement.</p>
+                </div>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Is this an AI video shortener free online tool?</h4>
+                    <p class="text-slate-300 text-sm">You can shorten long video links from any platform using our AI-ready infrastructure for better branding.</p>
+                </div>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Does it support custom names for links?</h4>
+                    <p class="text-slate-300 text-sm">Absolutely! You can create custom branded URLs like jarrylink.site/YourBrandName.</p>
+                </div>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Is this the highest paying link shortener?</h4>
+                    <p class="text-slate-300 text-sm">We focus on clean redirection and branding. For monetization, stay tuned for our upcoming premium features.</p>
+                </div>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Can I use a Chrome extension?</h4>
+                    <p class="text-slate-300 text-sm">A dedicated JarryLink Chrome extension is currently in development to make shortening even faster.</p>
+                </div>
+                <div class="faq-box bg-slate-800 border-slate-700">
+                    <h4 class="font-bold text-lg mb-2">Are my links permanent?</h4>
+                    <p class="text-slate-300 text-sm">Yes, links created on JarryLink are designed to be permanent and fast.</p>
                 </div>
             </div>
         </div>
