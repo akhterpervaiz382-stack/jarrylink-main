@@ -39,6 +39,8 @@ HTML_TOOL = """
         .faq-box { background: #f8fafc; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem; }
         input { border: 1.5px solid #e2e8f0 !important; }
         input:focus { border-color: #10b981 !important; outline: none; }
+        .sidebar-link { display: block; padding: 1rem; background: white; border: 1px solid #e2e8f0; border-radius: 0.75rem; transition: 0.3s; }
+        .sidebar-link:hover { border-color: #10b981; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1); }
     </style>
 </head>
 <body class="hero-gradient">
@@ -53,38 +55,59 @@ HTML_TOOL = """
         <a href="https://jarrylabs.com" class="text-xs font-bold bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-emerald-600 transition">JARRYLABS TOOLS</a>
     </nav>
 
-    <section class="pt-44 pb-24 px-6 text-center">
-        <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-bold uppercase tracking-widest mb-8">
-            Fastest Free URL Shortener 2026
-        </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight text-slate-900 leading-tight">
-            Shorten Links. <span class="text-gradient">Grow Authority.</span>
-        </h1>
-        
-        <div class="max-w-5xl mx-auto tool-card p-10 md:p-14 rounded-[2.5rem] relative">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
-                <div class="md:col-span-6 text-left">
-                    <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Paste Long URL</label>
-                    <input type="text" id="longUrl" placeholder="https://example.com/your-content" class="w-full mt-2 p-4 bg-slate-50 rounded-xl font-medium">
+    <section class="pt-44 pb-24 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10">
+            
+            <div class="lg:col-span-3 text-center lg:text-left">
+                <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-bold uppercase tracking-widest mb-8">
+                    Fastest Free URL Shortener 2026
                 </div>
-                <div class="md:col-span-4 text-left">
-                    <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Custom Alias</label>
-                    <div class="flex items-center bg-slate-50 rounded-xl mt-2 overflow-hidden border border-slate-200">
-                        <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink.site/</span>
-                        <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none font-medium">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight text-slate-900 leading-tight">
+                    Shorten Links. <span class="text-gradient">Grow Authority.</span>
+                </h1>
+                
+                <div class="tool-card p-10 md:p-14 rounded-[2.5rem] relative">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+                        <div class="md:col-span-6 text-left">
+                            <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Paste Long URL</label>
+                            <input type="text" id="longUrl" placeholder="https://example.com/your-content" class="w-full mt-2 p-4 bg-slate-50 rounded-xl font-medium">
+                        </div>
+                        <div class="md:col-span-4 text-left">
+                            <label class="text-[11px] text-slate-400 uppercase font-bold tracking-widest ml-1">Custom Alias</label>
+                            <div class="flex items-center bg-slate-50 rounded-xl mt-2 overflow-hidden border border-slate-200">
+                                <span class="pl-4 text-emerald-600 font-bold text-sm">jarrylink.site/</span>
+                                <input type="text" id="shortCode" placeholder="mybrand" class="w-full p-4 bg-transparent outline-none font-medium">
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <button onclick="shortenLink()" id="btn" class="w-full py-4 btn-primary rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg">Shorten</button>
+                        </div>
                     </div>
-                </div>
-                <div class="md:col-span-2">
-                    <button onclick="shortenLink()" id="btn" class="w-full py-4 btn-primary rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg">Shorten</button>
+
+                    <div id="result" class="mt-12 hidden p-8 bg-emerald-50 border border-emerald-100 rounded-3xl">
+                        <p class="text-[11px] text-emerald-600 font-bold uppercase mb-3 tracking-widest">Branded Link Ready</p>
+                        <div class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 tracking-tight" id="linkSpan">jarrylink/custom</div>
+                        <button onclick="copyLink()" id="copyBtn" class="bg-slate-900 text-white px-10 py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-emerald-600 transition">
+                            Copy Branded URL
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div id="result" class="mt-12 hidden p-8 bg-emerald-50 border border-emerald-100 rounded-3xl">
-                <p class="text-[11px] text-emerald-600 font-bold uppercase mb-3 tracking-widest">Branded Link Ready</p>
-                <div class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 tracking-tight" id="linkSpan">jarrylink/custom</div>
-                <button onclick="copyLink()" id="copyBtn" class="bg-slate-900 text-white px-10 py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-emerald-600 transition">
-                    Copy Branded URL
-                </button>
+            <div class="space-y-6">
+                <h3 class="text-xl font-bold text-slate-900">Top SEO Articles</h3>
+                <a href="https://www.jarrylabs.com/2026/01/how-to-use-custom-url-shorteners.html" target="_blank" class="sidebar-link">
+                    <p class="font-bold text-slate-800">Custom URL Strategy</p>
+                    <p class="text-sm text-slate-500">Boost brand recognition with branded links.</p>
+                </a>
+                <a href="https://www.jarrylabs.com/2026/01/best-seo-tools-2026.html" target="_blank" class="sidebar-link">
+                    <p class="font-bold text-slate-800">Best Free SEO Tools</p>
+                    <p class="text-sm text-slate-500">List of top tools for local and technical SEO.</p>
+                </a>
+                <a href="https://www.jarrylabs.com/2026/01/url-shortener-highest-paying.html" target="_blank" class="sidebar-link">
+                    <p class="font-bold text-slate-800">Highest Paying Shorteners</p>
+                    <p class="text-sm text-slate-500">Guide to monetizing your link traffic.</p>
+                </a>
             </div>
         </div>
     </section>
@@ -234,4 +257,5 @@ def shorten():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
-app = app
+if __name__ == "__main__":
+    app.run(debug=True)
